@@ -21,8 +21,12 @@ type AuthenticationService struct {
 	DB DatabaseAbstraction.DBOrm
 }
 
+type NotSignedInResponse struct {
+	error string
+}
+
 func (am AuthenticationService) AuthenticationMiddleware(c *gin.Context) {
-	// Check token in authorization header
+	// Check token in autorization header
 	// Populate user in context
 
 	// Get the token from the header
@@ -51,44 +55,71 @@ func (am AuthenticationService) AuthenticationMiddleware(c *gin.Context) {
 
 func (am AuthenticationService) RegisterHandlers(r *gin.Engine, _ ...gin.HandlerFunc) {
 	r.POST("/api/auth/login", am.Login)
-	r.GET("/api/auth/me", am.AuthenticationMiddleware, func(c *gin.Context) {
-		user, _ := c.Get("user")
-		c.JSON(200, gin.H{"id": user.(DatabaseAbstraction.User).IndexID, "username": user.(DatabaseAbstraction.User).Username})
-	})
-	r.POST("/api/logout", am.Logout)
-	r.POST("/api/register", am.Register)
+	r.GET("/api/auth/me", am.AuthenticationMiddleware, am.GetUserHandler)
+	/*r.POST("/api/logout", am.Logout)*/
+	r.POST("/api/auth/register", am.RegisterUserHandler)
 }
 
 func (am AuthenticationService) GetLabel() string {
 	return "Authentication Service"
 }
 
+type loginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+type loginResponse struct {
+	Token string `json:"token"`
+	Error string `json:"error"`
+}
+
+// Login godoc
+// @Summary Login to the application and get a token
+// @Description Login to the application and get a token, token is valid for 7 days
+// @Description error is empty if login was successful
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param loginRequest body loginRequest true "Login request"
+// @Success 200 {object} loginResponse
+// @Failure 400 {object} loginResponse
+// @Failure 401 {object} loginResponse
+// @Failure 500 {object} loginResponse
+// @Router /api/auth/login [post]
 func (am AuthenticationService) Login(ctx *gin.Context) {
-	type loginRequest struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
 
 	var request loginRequest
 	err := ctx.ShouldBindJSON(&request)
 	if err != nil {
-		ctx.JSON(400, gin.H{"error": "Bad request"})
+		ctx.JSON(400, loginResponse{
+			Token: "",
+			Error: "Invalid request",
+		})
 		return
 	}
 
 	if request.Username == "" || request.Password == "" {
-		ctx.JSON(400, gin.H{"error": "Empty username or password"})
+		ctx.JSON(400, loginResponse{
+			Token: "",
+			Error: "Empty username or password",
+		})
 		return
 	}
 
 	valid, err := am.AuthenticateUser(request.Username, request.Password)
 	if err != nil {
-		ctx.JSON(401, gin.H{"error": "User not found"})
+		ctx.JSON(401, loginResponse{
+			Token: "",
+			Error: "Invalid username or password",
+		})
 		return
 	}
 
 	if !valid {
-		ctx.JSON(401, gin.H{"error": "Invalid username or password"})
+		ctx.JSON(401, loginResponse{
+			Token: "",
+			Error: "Invalid username or password",
+		})
 		return
 	}
 
@@ -99,86 +130,121 @@ func (am AuthenticationService) Login(ctx *gin.Context) {
 
 	userToken, err := am.CreateToken(user.IndexID)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		ctx.JSON(500, loginResponse{
+			Token: "",
+			Error: "Failed to create token",
+		})
 		return
 	}
 
-	ctx.JSON(200, gin.H{"token": userToken})
+	ctx.JSON(200, loginResponse{
+		Token: userToken,
+		Error: "",
+	})
 }
 
-// @description Invalidate the current token
-// @tags Authentication
-// @accept json
-// @produce json
-// @success 200 {object} string "OK"
-func (am AuthenticationService) Logout(ctx *gin.Context) {
-	token := ctx.GetHeader("Authorization")
-	token = strings.TrimPrefix(token, "Bearer ")
-	if token == "" {
-		ctx.JSON(400, gin.H{"error": "No token provided"})
-		// The only reason this would happen is if the user is not logged in,
-		// which should be literally impossible because of the authentication middleware
-		logrus.Error("No token available for logout")
-		return
-	}
-
-	// Invalidate the token
-	err := am.DB.DeleteTokenByHash(token)
-	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
-		return
-	}
-
-	ctx.JSON(200, gin.H{"message": "OK"})
+type meResponse struct {
+	ID        int    `json:"id"`
+	Username  string `json:"username"`
+	Balance   int    `json:"balance"`
+	CreatedAt string `json:"created_at"`
 }
 
-// @description Register an account
-// @tags Authentication
-// @accept json
-// @produce json
-// @param username body string true "Username"
-// @param password body string true "Password"
-// @success 200 {object} string "token"
-func (am AuthenticationService) Register(ctx *gin.Context) {
-	type registerRequest struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+// GetUserHandler godoc
+// @Summary Get the current user
+// @Description Get the current user from the token
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Success 200 {object} meResponse
+// @Failure 401 {object} NotSignedInResponse
+// @Security ApiKeyAuth
+// @Router /api/auth/me [get]
+func (am AuthenticationService) GetUserHandler(c *gin.Context) {
+	user, _ := c.Get("user")
+	c.JSON(200, gin.H{"id": user.(DatabaseAbstraction.User).IndexID, "username": user.(DatabaseAbstraction.User).Username})
+}
 
-	var request registerRequest
-	err := ctx.ShouldBindJSON(&request)
+type registerRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// RegisterUserHandler godoc
+// @Summary Register a new user
+// @Description Register a new user
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param registerRequest body registerRequest true "Register request"
+// @Success 200 {object} loginResponse
+// @Failure 400 {object} loginResponse
+// @Failure 500 {object} loginResponse
+// @Router /api/auth/register [post]
+func (am AuthenticationService) RegisterUserHandler(c *gin.Context) {
+	registerRequest := registerRequest{}
+	err := c.ShouldBindJSON(&registerRequest)
 	if err != nil {
-		ctx.JSON(400, gin.H{"error": "Bad request"})
+		c.JSON(400, loginResponse{
+			Token: "",
+			Error: "Invalid request",
+		})
 		return
 	}
 
-	if request.Username == "" || request.Password == "" {
-		ctx.JSON(400, gin.H{"error": "Empty username or password"})
+	if registerRequest.Username == "" || registerRequest.Password == "" {
+		c.JSON(400, loginResponse{
+			Token: "",
+			Error: "Empty username or password",
+		})
 		return
 	}
 
 	// Check if the user already exists
-	user, err := am.DB.GetUserByUsername(request.Username)
+	user, err := am.DB.GetUserByUsername(registerRequest.Username)
 	if err == nil {
-		ctx.JSON(400, gin.H{"error": "User already exists"})
+		c.JSON(400, loginResponse{
+			Token: "",
+			Error: "User already exists",
+		})
 		return
 	}
 
 	// Create the user
-	err = am.CreateUser(request.Username, request.Password)
+	err = am.CreateUser(registerRequest.Username, registerRequest.Password)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		logrus.Error(err)
+		c.JSON(500, loginResponse{
+			Token: "",
+			Error: "Failed to create user",
+		})
 		return
 	}
 
 	// Get the user from the database
-	user, err = am.DB.GetUserByUsername(request.Username)
-
-	userToken, err := am.CreateToken(user.IndexID)
+	user, err = am.DB.GetUserByUsername(registerRequest.Username)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		logrus.Error(err)
+		c.JSON(500, loginResponse{
+			Token: "",
+			Error: "Failed to get user",
+		})
 		return
 	}
 
-	ctx.JSON(200, gin.H{"token": userToken})
+	// Generate a token for the user
+	token, err := am.CreateToken(user.IndexID)
+	if err != nil {
+		logrus.Error(err)
+		c.JSON(500, loginResponse{
+			Token: "",
+			Error: "Failed to create token",
+		})
+		return
+	}
+
+	c.JSON(200, loginResponse{
+		Token: token,
+		Error: "",
+	})
 }

@@ -76,7 +76,7 @@ func Connect() (*pgxpool.Pool, error) {
 	log.Printf("Database connection pool has %d connections", stat.TotalConns())
 	log.Printf("Database connection pool has %d idle connections", stat.MaxConns())
 
-	_, err = db.Exec(context.Background(), "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), balance int DEFAULT 0, created_at DATE DEFAULT CURRENT_DATE, updated_at DATE DEFAULT CURRENT_DATE, CONSTRAINT balance_never_negative CHECK ( balance >= 0 ));")
+	_, err = db.Exec(context.Background(), "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username VARCHAR(255) UNIQUE, password VARCHAR(255) NOT NULL, balance int DEFAULT 0 NOT NULL, created_at DATE DEFAULT CURRENT_DATE NOT NULL, updated_at DATE DEFAULT CURRENT_DATE NOT NULL, CONSTRAINT balance_never_negative CHECK ( balance >= 0 ));")
 	if err != nil {
 		logrus.Error(err)
 		debug.PrintStack()
