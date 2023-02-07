@@ -27,9 +27,6 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: brokeyourbike/go-mockery-action@2fc5585e2c58aa39aaa6b2479fefcf77b6a4d23a
       uses: brokeyourbike/go-mockery-action@v0.1.4
-      with:
-        # The mockery version to download and use. Exact version should be provided.
-        mockery-version: v2.16.0
     
     - name: Setup swag
       uses: yegorrybchenko/go-swag-action@v0.1
