@@ -116,7 +116,7 @@ type licenseRequest struct {
 // @Summary Get license key in key request format
 // @Description Internal videoplayer API
 // @Tags Licensing
-// @Success 200 {array} model.User
+// @Success 200 {array} object
 // @Failure 401 {object} object
 // @Router / [get]
 func DRMLicenseKeyRequestHandler(c *gin.Context) {

@@ -43,6 +43,7 @@ type DBOrm interface {
 	IncreaseUserBalance(indexID int, amount int) error
 	DecreaseUserBalance(indexID int, amount int) error
 	AddOwnedProduct(indexID int, productID int) error
+	DeleteTokenByHash(token string) error
 }
 
 const (

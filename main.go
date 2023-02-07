@@ -5,8 +5,11 @@ import (
 	"EntitlementServer/DatabaseAbstraction"
 	"EntitlementServer/LicenseKeyManager"
 	"EntitlementServer/ProductService"
+	_ "EntitlementServer/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 )
 
@@ -15,9 +18,9 @@ type HTTPService interface {
 	GetLabel() string
 }
 
-// @title User API documentation
+// @title BKBdemy API documentation
 // @version 1.0.0
-// @host localhost:8000
+// @host localhost:8080
 // @BasePath /
 func main() {
 	DB := DatabaseAbstraction.DBConnector{}
@@ -41,6 +44,8 @@ func main() {
 	licenseSvc.RegisterHandlers(r, authenticationSvc.AuthenticationMiddleware)
 	authenticationSvc.RegisterHandlers(r)
 	productSvc.RegisterHandlers(r, authenticationSvc.AuthenticationMiddleware)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	err = r.Run(":8080")
 	if err != nil {

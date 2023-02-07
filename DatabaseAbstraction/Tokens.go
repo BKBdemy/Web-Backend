@@ -57,3 +57,13 @@ func (dbc DBConnector) DeleteToken(tokenID int) error {
 
 	return nil
 }
+
+func (dbc DBConnector) DeleteTokenByHash(token string) error {
+	// Delete the token from the database
+	_, err := dbc.DB.Exec(context.Background(), "DELETE FROM user_tokens WHERE token = $1", token)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
