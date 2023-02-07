@@ -33,7 +33,7 @@ jobs:
     - name: Setup swag & generate Swagger docs
       uses: yegorrybchenko/go-swag-action@v0.1
       with:
-        command: swag init
+        command: init
     
     - name: Generate mock interfaces
       run: mockery --all --with-expecter 
