@@ -30,14 +30,13 @@ jobs:
       with:
         mockery-version: "2.16.0"
     
-    - name: Setup swag
+    - name: Setup swag & generate Swagger docs
       uses: yegorrybchenko/go-swag-action@v0.1
+      with:
+        command: swag init
     
     - name: Generate mock interfaces
       run: mockery --all --with-expecter 
-    
-    - name: Generate Swagger docs
-      run: swag init
     
     - name: Build
       run: go build -v ./...
