@@ -6,7 +6,9 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/sirupsen/logrus"
 	"log"
+	"os"
 	"runtime/debug"
+	"strconv"
 	"time"
 )
 
@@ -47,21 +49,38 @@ type DBOrm interface {
 }
 
 const (
-	host     = "localhost"
-	port     = 5432
-	user     = "license"
-	password = "license"
-	dbname   = "license"
+	default_postgres_host     = "localhost"
+	default_postgres_port     = 5432
+	default_postgres_user     = "license"
+	default_postgres_password = "license"
+	default_postgres_dbname   = "license"
 )
 
+func getenvWithFallback(key string, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
 func Connect() (*pgxpool.Pool, error) {
+	host := getenvWithFallback("DB_HOST", default_postgres_host)
+	port, err := strconv.Atoi(getenvWithFallback("DB_PORT", fmt.Sprintf("%d", default_postgres_port)))
+	if err != nil {
+		log.Fatal("DB_PORT is not a valid integer " + err.Error())
+	}
+	user := getenvWithFallback("DB_USER", default_postgres_user)
+	password := getenvWithFallback("DB_PASSWORD", default_postgres_password)
+	dbname := getenvWithFallback("DB_NAME", default_postgres_dbname)
+
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
+	log.Printf("Connecting to database with connection string: %s", psqlInfo)
 
 	var db *pgxpool.Pool
 
-	var err error
 	db, err = pgxpool.New(context.Background(), psqlInfo)
 	if err != nil {
 		panic(err)
