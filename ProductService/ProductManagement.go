@@ -62,6 +62,17 @@ func (p ProductService) PurchaseProduct(ProductID int, user DatabaseAbstraction.
 		return err
 	}
 
+	// Check if the user already owns the product
+	ownedProducts, err := p.DB.GetOwnedProducts(user.IndexID)
+	if err != nil {
+		return err
+	}
+	for _, ownedProduct := range ownedProducts {
+		if ownedProduct.IndexID == product.IndexID {
+			return errors.New("user already owns product")
+		}
+	}
+
 	// Check if the user has enough money to purchase the product
 	if user.Balance < product.Price {
 		return ErrNotEnoughMoney
@@ -70,6 +81,7 @@ func (p ProductService) PurchaseProduct(ProductID int, user DatabaseAbstraction.
 	// Update the user's balance
 	err = p.DB.DecreaseUserBalance(user.IndexID, product.Price)
 	if err != nil {
+		logrus.Error(err)
 		// If this error happens, we have probably just prevented a racy purchase
 		return err
 	}
@@ -77,8 +89,11 @@ func (p ProductService) PurchaseProduct(ProductID int, user DatabaseAbstraction.
 	// Add the product to the user's owned products
 	err = p.DB.AddOwnedProduct(user.IndexID, product.IndexID)
 	if err != nil {
+		logrus.Error(err)
 		return err
 	}
+
+	logrus.Println("User", user.IndexID, "purchased product", product.IndexID)
 
 	return nil
 }

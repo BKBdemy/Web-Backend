@@ -18,10 +18,16 @@ type HTTPService interface {
 	GetLabel() string
 }
 
-// @title BKBdemy API documentation
-// @version 1.0.0
-// @host localhost:8080
-// @BasePath /
+// @title						BKBdemy API documentation
+// @version					1.0.0
+// @host						localhost:8080
+//
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
+// @description				User-identifying authentication token
+//
+// @BasePath					/
 func main() {
 	DB := DatabaseAbstraction.DBConnector{}
 	conn, err := DatabaseAbstraction.Connect()

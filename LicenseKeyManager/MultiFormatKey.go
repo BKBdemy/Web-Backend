@@ -3,6 +3,7 @@ package LicenseKeyManager
 import (
 	"encoding/base64"
 	"encoding/hex"
+	"strings"
 )
 
 type LicenseKey struct {
@@ -39,4 +40,12 @@ func (e EncryptionKey) GetBytes() ([]byte, error) {
 		return nil, err
 	}
 	return dst, nil
+}
+
+func Base64ToHex(input string) (string, error) {
+	bytes, err := base64.RawStdEncoding.DecodeString(strings.Trim(input, " "))
+	if err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
 }

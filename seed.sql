@@ -16,11 +16,11 @@ VALUES ('Product 1', 'Product 1 description', 1000, 'product1.jpg', 'product1.mp
 INSERT INTO products (name, description, price, image, mpd_url)
 VALUES ('Product 2', 'Product 2 description', 2000, 'product2.jpg', 'product2.mpd');
 
-INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('wrtwetwtwt', '12345678901234567890123456789012', 1);
-INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('etestest', 't4rezre4dz', 1);
+INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('f3c5e0361e6654b28f8049c778b23946', 'a4631a153a443df9eed0593043db7519', 1);
+INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('abba271e8bcf552bbd2e86a434a9a5d9', '69eaa802a6763af979e8d1940fb88392', 1);
 
-INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('testtest', '12345678901234567890123456789012', 2);
-INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('testtest2', 't4rezre4dz', 2);
+INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('f3c5e0361e6654b28f8049c778b23946', 'a4631a153a443df9eed0593043db7519', 2);
+INSERT INTO licenses (key_id, encryption_key, product_id) VALUES ('abba271e8bcf552bbd2e86a434a9a5d9', '69eaa802a6763af979e8d1940fb88392', 2);
 
 INSERT INTO product_licenses (product_id, license_id)
 VALUES (1, 1);

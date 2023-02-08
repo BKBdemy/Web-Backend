@@ -32,6 +32,7 @@ type DBOrm interface {
 	GetTokenByHash(token string) (Token, error)
 	AddToken(userID int, token string, expiry time.Time) error
 	DeleteToken(tokenID int) error
+	DeleteTokenByHash(token string) error
 
 	GetAllUsers() ([]User, error)
 	GetUserByUsername(username string) (User, error)
@@ -45,7 +46,6 @@ type DBOrm interface {
 	IncreaseUserBalance(indexID int, amount int) error
 	DecreaseUserBalance(indexID int, amount int) error
 	AddOwnedProduct(indexID int, productID int) error
-	DeleteTokenByHash(token string) error
 }
 
 const (

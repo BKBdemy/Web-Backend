@@ -4,6 +4,7 @@ import (
 	"EntitlementServer/DatabaseAbstraction"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"strconv"
 	"strings"
 )
 
@@ -56,8 +57,9 @@ func (am AuthenticationService) AuthenticationMiddleware(c *gin.Context) {
 func (am AuthenticationService) RegisterHandlers(r *gin.Engine, _ ...gin.HandlerFunc) {
 	r.POST("/api/auth/login", am.Login)
 	r.GET("/api/auth/me", am.AuthenticationMiddleware, am.GetUserHandler)
-	/*r.POST("/api/logout", am.Logout)*/
+	r.POST("/api/logout", am.AuthenticationMiddleware, am.LogoutHandler)
 	r.POST("/api/auth/register", am.RegisterUserHandler)
+	r.POST("/api/auth/increase_balance/:amount", am.AuthenticationMiddleware, am.IncreaseBalanceHandler)
 }
 
 func (am AuthenticationService) GetLabel() string {
@@ -74,18 +76,19 @@ type loginResponse struct {
 }
 
 // Login godoc
-// @Summary Login to the application and get a token
-// @Description Login to the application and get a token, token is valid for 7 days
-// @Description error is empty if login was successful
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param loginRequest body loginRequest true "Login request"
-// @Success 200 {object} loginResponse
-// @Failure 400 {object} loginResponse
-// @Failure 401 {object} loginResponse
-// @Failure 500 {object} loginResponse
-// @Router /api/auth/login [post]
+//
+//	@Summary		Login to the application and get a token
+//	@Description	Login to the application and get a token, token is valid for 7 days
+//	@Description	error is empty if login was successful
+//	@Tags			Authentication
+//	@Accept			json
+//	@Produce		json
+//	@Param			loginRequest	body		loginRequest	true	"Login request"
+//	@Success		200				{object}	loginResponse
+//	@Failure		400				{object}	loginResponse
+//	@Failure		401				{object}	loginResponse
+//	@Failure		500				{object}	loginResponse
+//	@Router			/api/auth/login [post]
 func (am AuthenticationService) Login(ctx *gin.Context) {
 
 	var request loginRequest
@@ -151,18 +154,24 @@ type meResponse struct {
 }
 
 // GetUserHandler godoc
-// @Summary Get the current user
-// @Description Get the current user from the token
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Success 200 {object} meResponse
-// @Failure 401 {object} NotSignedInResponse
-// @Security ApiKeyAuth
-// @Router /api/auth/me [get]
+//
+//	@Summary		Get the current user
+//	@Description	Get the current user from the token
+//	@Tags			Authentication
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	meResponse
+//	@Failure		401	{object}	NotSignedInResponse
+//	@Security		ApiKeyAuth
+//	@Router			/api/auth/me [get]
 func (am AuthenticationService) GetUserHandler(c *gin.Context) {
 	user, _ := c.Get("user")
-	c.JSON(200, gin.H{"id": user.(DatabaseAbstraction.User).IndexID, "username": user.(DatabaseAbstraction.User).Username})
+	c.JSON(200, meResponse{
+		ID:        user.(DatabaseAbstraction.User).IndexID,
+		Username:  user.(DatabaseAbstraction.User).Username,
+		Balance:   user.(DatabaseAbstraction.User).Balance,
+		CreatedAt: user.(DatabaseAbstraction.User).CreatedAt.Format("2006-01-02 15:04:05"),
+	})
 }
 
 type registerRequest struct {
@@ -171,16 +180,17 @@ type registerRequest struct {
 }
 
 // RegisterUserHandler godoc
-// @Summary Register a new user
-// @Description Register a new user
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param registerRequest body registerRequest true "Register request"
-// @Success 200 {object} loginResponse
-// @Failure 400 {object} loginResponse
-// @Failure 500 {object} loginResponse
-// @Router /api/auth/register [post]
+//
+//	@Summary		Register a new user
+//	@Description	Register a new user
+//	@Tags			Authentication
+//	@Accept			json
+//	@Produce		json
+//	@Param			registerRequest	body		registerRequest	true	"Register request"
+//	@Success		200				{object}	loginResponse
+//	@Failure		400				{object}	loginResponse
+//	@Failure		500				{object}	loginResponse
+//	@Router			/api/auth/register [post]
 func (am AuthenticationService) RegisterUserHandler(c *gin.Context) {
 	registerRequest := registerRequest{}
 	err := c.ShouldBindJSON(&registerRequest)
@@ -245,6 +255,89 @@ func (am AuthenticationService) RegisterUserHandler(c *gin.Context) {
 
 	c.JSON(200, loginResponse{
 		Token: token,
+		Error: "",
+	})
+}
+
+type logoutResponse struct {
+	Error string `json:"error"`
+}
+
+// LogoutHandler godoc
+//
+//	@Summary		Logout the current user
+//	@Description	Logout the current user
+//	@Tags			Authentication
+//	@Accept			json
+//	@Produce		json
+//	@Success		200				{object}	logoutResponse
+//	@Failure		401				{object}	logoutResponse
+//	@Failure		500				{object}	logoutResponse
+//	@Security		ApiKeyAuth
+//	@Router			/api/auth/logout [post]
+func (am AuthenticationService) LogoutHandler(c *gin.Context) {
+	// Delete the token from the database
+	// Middleware handles authentication but doesn't pass token, so extract from header
+
+	token := c.GetHeader("Authorization")
+	if token == "" {
+		c.JSON(401, logoutResponse{
+			Error: "Not signed in",
+		})
+		// should be impossible to get here
+		return
+	}
+
+	token = strings.TrimPrefix(token, "Bearer ")
+
+	err := am.DB.DeleteTokenByHash(token)
+	if err != nil {
+		c.JSON(500, logoutResponse{
+			Error: "Failed to delete token",
+		})
+		return
+	}
+
+	c.JSON(200, logoutResponse{
+		Error: "",
+	})
+}
+
+// IncreaseBalanceHandler godoc
+// @Description	Increase the balance of the current user
+// @Tags			Demo Endpoints
+// @Accept			json
+// @Produce		json
+// @Param			amount	path	int	true	"Amount to increase balance by"
+// @Success		200				{object}	logoutResponse
+// @Failure		400				{object}	logoutResponse
+// @Failure		500				{object}	logoutResponse
+// @Security		ApiKeyAuth
+// @Router			/api/auth/increase_balance/{amount} [post]
+func (am AuthenticationService) IncreaseBalanceHandler(c *gin.Context) {
+	// Get the user from the context
+	user, _ := c.Get("user")
+
+	// Get the amount from the request
+	amount := c.Param("amount")
+	amountInt, err := strconv.Atoi(amount)
+	if err != nil {
+		c.JSON(400, logoutResponse{
+			Error: "Invalid amount",
+		})
+		return
+	}
+
+	// Increase the balance
+	err = am.DB.IncreaseUserBalance(user.(DatabaseAbstraction.User).IndexID, amountInt)
+	if err != nil {
+		c.JSON(500, logoutResponse{
+			Error: "Failed to increase balance",
+		})
+		return
+	}
+
+	c.JSON(200, logoutResponse{
 		Error: "",
 	})
 }
