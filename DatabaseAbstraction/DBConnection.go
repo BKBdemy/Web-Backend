@@ -77,7 +77,12 @@ func Connect() (*pgxpool.Pool, error) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-	log.Printf("Connecting to database with connection string: %s", psqlInfo)
+
+	censoredPsqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, "********", dbname)
+
+	log.Printf("Connecting to database with connection string: %s", censoredPsqlInfo)
 
 	var db *pgxpool.Pool
 
