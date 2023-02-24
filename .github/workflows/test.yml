@@ -12,6 +12,9 @@ on:
 jobs:
 
   build:
+    permissions:
+      actions: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
