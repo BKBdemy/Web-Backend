@@ -34,6 +34,16 @@ func (am AuthenticationService) AuthenticationMiddleware(c *gin.Context) {
 	token := c.GetHeader("Authorization")
 	token = strings.TrimPrefix(token, "Bearer ")
 
+	if token == "" {
+		// Get token from cookie
+		token, _ = c.Cookie("authtoken")
+	}
+
+	if token == "" {
+		c.JSON(401, gin.H{"error": "Invalid token"})
+		return
+	}
+
 	// Validate the token
 	valid, user, err := am.ValidateToken(token)
 
@@ -90,7 +100,6 @@ type loginResponse struct {
 //	@Failure		500				{object}	loginResponse
 //	@Router			/api/auth/login [post]
 func (am AuthenticationService) Login(ctx *gin.Context) {
-
 	var request loginRequest
 	err := ctx.ShouldBindJSON(&request)
 	if err != nil {
@@ -139,6 +148,8 @@ func (am AuthenticationService) Login(ctx *gin.Context) {
 		})
 		return
 	}
+
+	ctx.SetCookie("authtoken", userToken, 7*24*60*60, "", "", true, true)
 
 	ctx.JSON(200, loginResponse{
 		Token: userToken,
@@ -297,6 +308,8 @@ func (am AuthenticationService) LogoutHandler(c *gin.Context) {
 		})
 		return
 	}
+
+	c.SetCookie("authtoken", "", -1, "", "", true, true)
 
 	c.JSON(200, logoutResponse{
 		Error: "",

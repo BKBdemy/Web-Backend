@@ -1,0 +1,389 @@
+definitions:
+  AuthenticationManagement.NotSignedInResponse:
+    type: object
+  AuthenticationManagement.loginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  AuthenticationManagement.loginResponse:
+    properties:
+      error:
+        type: string
+      token:
+        type: string
+    type: object
+  AuthenticationManagement.logoutResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  AuthenticationManagement.meResponse:
+    properties:
+      balance:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  AuthenticationManagement.registerRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  LicenseKeyManager.licenseRequestError:
+    properties:
+      error:
+        type: string
+    type: object
+  LicenseKeyManager.shakaLicenseKeypair:
+    properties:
+      k:
+        type: string
+      kid:
+        type: string
+      kty:
+        type: string
+    type: object
+  LicenseKeyManager.shakaLicenseRequest:
+    properties:
+      kids:
+        items:
+          type: string
+        type: array
+      type:
+        type: string
+    type: object
+  LicenseKeyManager.shakaLicenseResponse:
+    properties:
+      keys:
+        items:
+          $ref: '#/definitions/LicenseKeyManager.shakaLicenseKeypair'
+        type: array
+      type:
+        type: string
+    type: object
+  ProductService.productErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  ProductService.productResponse:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      mpd_URL:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  ProductService.purchaseProductResponse:
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: BKBdemy API documentation
+  version: 1.0.0
+paths:
+  /api/auth/increase_balance/{amount}:
+    post:
+      consumes:
+      - application/json
+      description: Increase the balance of the current user
+      parameters:
+      - description: Amount to increase balance by
+        in: path
+        name: amount
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Demo Endpoints
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Login to the application and get a token, token is valid for 7 days
+        error is empty if login was successful
+      parameters:
+      - description: Login request
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/AuthenticationManagement.loginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+      summary: Login to the application and get a token
+      tags:
+      - Authentication
+  /api/auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout the current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.logoutResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Logout the current user
+      tags:
+      - Authentication
+  /api/auth/me:
+    get:
+      consumes:
+      - application/json
+      description: Get the current user from the token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.meResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.NotSignedInResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get the current user
+      tags:
+      - Authentication
+  /api/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: Register request
+        in: body
+        name: registerRequest
+        required: true
+        schema:
+          $ref: '#/definitions/AuthenticationManagement.registerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/AuthenticationManagement.loginResponse'
+      summary: Register a new user
+      tags:
+      - Authentication
+  /api/licensing/keyserver/keyrequest:
+    post:
+      consumes:
+      - application/json
+      description: ShakaPlayer license key request handler
+      parameters:
+      - description: License request
+        in: body
+        name: licenseRequest
+        required: true
+        schema:
+          $ref: '#/definitions/LicenseKeyManager.shakaLicenseRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/LicenseKeyManager.shakaLicenseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/LicenseKeyManager.licenseRequestError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/LicenseKeyManager.licenseRequestError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get license key in key request format
+      tags:
+      - LicenseKeyManager
+  /api/products:
+    get:
+      consumes:
+      - application/json
+      description: Get all products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ProductService.productResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all products
+      tags:
+      - Products
+  /api/products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductService.productResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ProductService.productErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ProductService.productErrorResponse'
+      summary: Get a product
+      tags:
+      - Products
+  /api/products/{id}/purchase:
+    post:
+      consumes:
+      - application/json
+      description: Purchase a product and add it to the user's owned products
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductService.purchaseProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ProductService.purchaseProductResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ProductService.purchaseProductResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Purchase a product
+      tags:
+      - Products
+  /api/products/owned:
+    get:
+      consumes:
+      - application/json
+      description: Get products owned by the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ProductService.productResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get owned products
+      tags:
+      - Products
+securityDefinitions:
+  ApiKeyAuth:
+    description: User-identifying authentication token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
