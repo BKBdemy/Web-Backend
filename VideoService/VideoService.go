@@ -22,7 +22,7 @@ type Video struct {
 }
 
 type VSService struct {
-	DB DatabaseAbstraction.DBConnector
+	DB DatabaseAbstraction.DBOrm
 }
 
 func (V VSService) RegisterHandlers(r *gin.Engine, middleware ...gin.HandlerFunc) {

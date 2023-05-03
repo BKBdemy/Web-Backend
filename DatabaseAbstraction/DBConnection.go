@@ -37,6 +37,9 @@ type DBOrm interface {
 	DecreaseUserBalance(indexID int, amount int) error
 	AddOwnedProduct(indexID int, productID int) error
 
+	MarkVideoAsWatched(indexID int, user User) error
+	GetWatchedVideosByUser(user User) ([]Video, error)
+
 	GetAllVideos() ([]Video, error)
 	GetVideosByProductIndexID(productID int) ([]Video, error)
 	GetVideoByIndexID(indexID int) (Video, error)

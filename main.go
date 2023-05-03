@@ -4,6 +4,7 @@ import (
 	"EntitlementServer/AuthenticationManagement"
 	"EntitlementServer/DatabaseAbstraction"
 	"EntitlementServer/ProductService"
+	"EntitlementServer/VideoService"
 	_ "EntitlementServer/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -38,7 +39,7 @@ func main() {
 
 	authenticationSvc := AuthenticationManagement.AuthenticationService{DB: &DB}
 	productSvc := ProductService.ProductService{DB: &DB}
-	videoSvc := ProductService.ProductService{DB: &DB}
+	videoSvc := VideoService.VSService{DB: &DB}
 
 	r := gin.Default()
 
