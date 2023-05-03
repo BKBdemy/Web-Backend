@@ -20,6 +20,7 @@ CREATE TABLE user_tokens (
     id         SERIAL PRIMARY KEY,
     user_id    INTEGER NOT NULL,
     token      VARCHAR NOT NULL,
+    expiry    TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

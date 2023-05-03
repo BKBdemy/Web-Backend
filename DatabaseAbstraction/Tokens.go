@@ -14,7 +14,7 @@ type Token struct {
 
 func (dbc DBConnector) GetTokenByTokenID(tokenID string) (Token, error) {
 	// Get the token from the database
-	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM user_tokens WHERE id = $1 AND expiry > now()", tokenID)
+	row := dbc.DB.QueryRow(context.Background(), "SELECT id, user_id, token, expiry FROM user_tokens WHERE id = $1 AND expiry > now()", tokenID)
 
 	var userToken Token
 	err := row.Scan(&userToken.IndexID, &userToken.UserID, &userToken.Token, &userToken.Expiry)
@@ -27,7 +27,7 @@ func (dbc DBConnector) GetTokenByTokenID(tokenID string) (Token, error) {
 
 func (dbc DBConnector) GetTokenByHash(token string) (Token, error) {
 	// Get the token from the database
-	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM user_tokens WHERE token = $1 AND expiry > now()", token)
+	row := dbc.DB.QueryRow(context.Background(), "SELECT id, user_id, token, expiry FROM user_tokens WHERE token = $1 AND expiry > now()", token)
 
 	var userToken Token
 	err := row.Scan(&userToken.IndexID, &userToken.UserID, &userToken.Token, &userToken.Expiry)
