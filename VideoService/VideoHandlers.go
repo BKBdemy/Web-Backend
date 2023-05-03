@@ -59,6 +59,7 @@ func (V VSService) GetVideoInfoHandler(c *gin.Context) {
 // @Param number path int true "Video ID"
 // @Success 200 {string} string	"success"
 // @Router /api/video/{number}/progress [post]
+// @Security		ApiKeyAuth
 func (V VSService) MarkFinishedEndpoint(c *gin.Context) {
 	videoID := c.Param("number")
 
@@ -91,6 +92,7 @@ func (V VSService) MarkFinishedEndpoint(c *gin.Context) {
 // @Tags Videos
 // @Param number path int true "Video ID"
 // @Success 200
+// @Security ApiKeyAuth
 func (V VSService) StartVideoStream(c *gin.Context) {
 	videoID := c.Param("number")
 
@@ -117,6 +119,7 @@ func (V VSService) StartVideoStream(c *gin.Context) {
 // @Produce  json
 // @Success 200 {array} Video
 // @Router /api/video/watched [get]
+// @Security ApiKeyAuth
 func (V VSService) GetWatchedVideos(c *gin.Context) {
 	// Get user from context
 	user := c.MustGet("user").(DatabaseAbstraction.User)
