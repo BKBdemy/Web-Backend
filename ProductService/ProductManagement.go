@@ -2,7 +2,6 @@ package ProductService
 
 import (
 	"EntitlementServer/DatabaseAbstraction"
-	"EntitlementServer/LicenseKeyManager"
 	"errors"
 	"github.com/sirupsen/logrus"
 )
@@ -13,28 +12,12 @@ func (p ProductService) GetProduct(ProductID int) (Product, error) {
 		return Product{}, err
 	}
 
-	// Also get the license keys for the product
-	licenseKeys, err := p.DB.GetProductLicenseKeys(ProductID)
-	if err != nil {
-		return Product{}, err
-	}
-	var convertedLicenseKeys []LicenseKeyManager.LicenseKey
-	for _, licenseKey := range licenseKeys {
-		convertedLicenseKeys = append(convertedLicenseKeys, LicenseKeyManager.LicenseKey{
-			KeyID:         licenseKey.KeyID,
-			EncryptionKey: LicenseKeyManager.EncryptionKey{Hex: licenseKey.EncryptionKey},
-			ProductID:     licenseKey.ProductID,
-		})
-	}
-
 	return Product{
 		ID:          product.IndexID,
 		Name:        product.Name,
 		Description: product.Description,
 		Price:       product.Price,
 		Image:       product.Image,
-		MPD_URL:     product.MPDURL,
-		LicenseKeys: convertedLicenseKeys,
 	}, nil
 }
 
@@ -110,33 +93,12 @@ func (p ProductService) GetOwnedProducts(user DatabaseAbstraction.User) []Produc
 	return p.enrichDatabaseProducts(ownedProducts)
 }
 
-func (p ProductService) GetProductLicenseKeys(ProductID int) []LicenseKeyManager.LicenseKey {
-	// Get the license keys from the database
-	licenseKeys, err := p.DB.GetProductLicenseKeys(ProductID)
-	if err != nil {
-		return []LicenseKeyManager.LicenseKey{}
-	}
-
-	// Convert the license keys to the correct format
-	var convertedLicenseKeys []LicenseKeyManager.LicenseKey
-	for _, licenseKey := range licenseKeys {
-		convertedLicenseKeys = append(convertedLicenseKeys, LicenseKeyManager.LicenseKey{
-			KeyID:         licenseKey.KeyID,
-			EncryptionKey: LicenseKeyManager.EncryptionKey{Hex: licenseKey.EncryptionKey},
-			ProductID:     licenseKey.ProductID,
-		})
-	}
-
-	return convertedLicenseKeys
-}
-
 func (p ProductService) AddProduct(Product Product) (int, error) {
 	newID, err := p.DB.AddProduct(DatabaseAbstraction.Product{
 		Name:        Product.Name,
 		Description: Product.Description,
 		Price:       Product.Price,
 		Image:       Product.Image,
-		MPDURL:      Product.MPD_URL,
 	})
 	if err != nil {
 		return -1, err
@@ -150,28 +112,12 @@ func (p ProductService) enrichDatabaseProducts(products []DatabaseAbstraction.Pr
 	// Convert the products to the correct format
 	var convertedProducts []Product
 	for _, product := range products {
-		// Also get the license keys for the product
-		licenseKeys, err := p.DB.GetProductLicenseKeys(product.IndexID)
-		if err != nil {
-			return []Product{}
-		}
-		var convertedLicenseKeys []LicenseKeyManager.LicenseKey
-		for _, licenseKey := range licenseKeys {
-			convertedLicenseKeys = append(convertedLicenseKeys, LicenseKeyManager.LicenseKey{
-				KeyID:         licenseKey.KeyID,
-				EncryptionKey: LicenseKeyManager.EncryptionKey{Hex: licenseKey.EncryptionKey},
-				ProductID:     licenseKey.ProductID,
-			})
-		}
-
 		convertedProducts = append(convertedProducts, Product{
 			ID:          product.IndexID,
 			Name:        product.Name,
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
-			MPD_URL:     product.MPDURL,
-			LicenseKeys: convertedLicenseKeys,
 		})
 	}
 

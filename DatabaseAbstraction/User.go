@@ -12,6 +12,7 @@ type User struct {
 	Balance   int
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Points    int
 }
 
 func (dbc DBConnector) GetAllUsers() ([]User, error) {
@@ -25,7 +26,7 @@ func (dbc DBConnector) GetAllUsers() ([]User, error) {
 	var users []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt)
+		err := rows.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt, &user.Points)
 		if err != nil {
 			return []User{}, err
 		}
@@ -40,7 +41,7 @@ func (dbc DBConnector) GetUserByUsername(username string) (User, error) {
 	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM users WHERE username = $1", username)
 
 	var user User
-	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt)
+	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt, &user.Points)
 	if err != nil {
 		return User{}, err
 	}
@@ -53,7 +54,7 @@ func (dbc DBConnector) GetUserByIndexID(indexID int) (User, error) {
 	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM users WHERE id = $1", indexID)
 
 	var user User
-	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt)
+	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt, &user.Points)
 	if err != nil {
 		return User{}, err
 	}
@@ -118,7 +119,7 @@ func (dbc DBConnector) GetOwnedProducts(indexID int) ([]Product, error) {
 	var products []Product
 	for rows.Next() {
 		var product Product
-		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.MPDURL, &product.CreatedAt, &product.UpdatedAt)
+		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt)
 		if err != nil {
 			return []Product{}, err
 		}
@@ -126,25 +127,6 @@ func (dbc DBConnector) GetOwnedProducts(indexID int) ([]Product, error) {
 	}
 
 	return products, nil
-}
-
-func (dbc DBConnector) GetOwnedLicenseKeys(indexID int) ([]LicenseKey, error) {
-	rows, err := dbc.DB.Query(context.Background(), "SELECT key_id, encryption_key, l.product_id FROM user_purchases JOIN product_licenses pl on user_purchases.product_id = pl.product_id JOIN licenses l on pl.license_id = l.id WHERE user_purchases.user_id = $1", indexID)
-	if err != nil {
-		return []LicenseKey{}, err
-	}
-
-	var licenseKeys []LicenseKey
-	for rows.Next() {
-		var licenseKey LicenseKey
-		err := rows.Scan(&licenseKey.KeyID, &licenseKey.EncryptionKey, &licenseKey.ProductID)
-		if err != nil {
-			return []LicenseKey{}, err
-		}
-		licenseKeys = append(licenseKeys, licenseKey)
-	}
-
-	return licenseKeys, nil
 }
 
 func (dbc DBConnector) IncreaseUserBalance(indexID int, amount int) error {

@@ -9,18 +9,18 @@ services:
       POSTGRES_DB: entitlement
     ports:
       - "5432:5432"
-#  backend:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    restart: unless-stopped
-#    ports:
-#      - '8080:8080'
-#    environment:
-#      DB_PASSWORD: entitlement
-#      DB_USER: entitlement
-#      DB_NAME: entitlement
-#      DB_HOST: db
-#      DB_PORT: 5432
-#    depends_on:
-#      - db
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    environment:
+      DB_PASSWORD: entitlement
+      DB_USER: entitlement
+      DB_NAME: entitlement
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db

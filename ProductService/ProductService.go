@@ -2,7 +2,7 @@ package ProductService
 
 import (
 	"EntitlementServer/DatabaseAbstraction"
-	"EntitlementServer/LicenseKeyManager"
+	"EntitlementServer/VideoService"
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
@@ -14,8 +14,7 @@ type Product struct {
 	Description string
 	Price       int
 	Image       string
-	MPD_URL     string
-	LicenseKeys []LicenseKeyManager.LicenseKey
+	Videos      []VideoService.Video
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -25,7 +24,6 @@ type ProductServiceProvider interface {
 	GetAllProducts() []Product
 	PurchaseProduct(ProductID int, user DatabaseAbstraction.User) error
 	GetOwnedProducts(user DatabaseAbstraction.User) []Product
-	GetProductLicenseKeys(ProductID int) []LicenseKeyManager.LicenseKey
 	AddProduct(Product Product) (int, error)
 }
 
@@ -36,41 +34,8 @@ type ProductService struct {
 func (p ProductService) RegisterHandlers(r *gin.Engine, middleware ...gin.HandlerFunc) {
 	r.GET("/api/products", p.GetAllProductsHandler)
 	r.GET("/api/products/:id", p.GetProductHandler)
-	r.GET("/api/products/:id/licensekeys", middleware[0], p.GetProductLicenseKeysHandler)
 	r.POST("/api/products/:id/purchase", middleware[0], p.PurchaseProductHandler)
 	r.GET("/api/products/owned", middleware[0], p.GetOwnedProductsHandler)
-}
-
-func (p ProductService) GetProductLicenseKeysHandler(c *gin.Context) {
-	productID := c.Param("id")
-	convertedProductID, err := strconv.Atoi(productID)
-	if err != nil {
-		c.JSON(400, gin.H{"error": "invalid product id"})
-		return
-	}
-
-	licenseKeys := p.GetProductLicenseKeys(convertedProductID)
-	if licenseKeys == nil {
-		c.JSON(404, gin.H{"error": "product not found"})
-		return
-	}
-
-	userOwnedProducts := p.GetOwnedProducts(c.MustGet("user").(DatabaseAbstraction.User))
-
-	// Check if the user owns the product
-	var productOwned bool
-	for _, product := range userOwnedProducts {
-		if product.ID == convertedProductID {
-			productOwned = true
-			break
-		}
-	}
-
-	if !productOwned {
-		c.JSON(403, gin.H{"error": "product not owned"})
-	} else {
-		c.JSON(200, licenseKeys)
-	}
 }
 
 type productResponse struct {
@@ -81,7 +46,7 @@ type productResponse struct {
 	Description string
 	Price       int
 	Image       string
-	MPD_URL     string
+	Videos      []VideoService.Video
 }
 
 type productErrorResponse struct {
@@ -110,7 +75,6 @@ func (p ProductService) GetAllProductsHandler(c *gin.Context) {
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
-			MPD_URL:     product.MPD_URL,
 		}
 	}
 
@@ -150,7 +114,6 @@ func (p ProductService) GetProductHandler(c *gin.Context) {
 		Description: product.Description,
 		Price:       product.Price,
 		Image:       product.Image,
-		MPD_URL:     product.MPD_URL,
 	}
 
 	c.JSON(200, responseProduct)
@@ -214,6 +177,25 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 
 	productResponses := make([]productResponse, len(products))
 	for i, product := range products {
+		// Get the videos for the product
+		videos, err := p.DB.GetVideosByProductIndexID(product.ID)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "error getting videos"})
+			return
+		}
+		// Convert the videos to video responses
+		videoResponses := make([]VideoService.Video, len(videos))
+		for i, video := range videos {
+			videoResponses[i] = VideoService.Video{
+				IndexID:     video.IndexID,
+				Name:        video.Name,
+				Description: video.Description,
+				Points:      video.Points,
+				Thumbnail:   video.Thumbnail,
+				Filename:    video.Filename,
+			}
+		}
+
 		productResponses[i] = productResponse{
 			CreatedAt:   product.CreatedAt,
 			UpdatedAt:   product.UpdatedAt,
@@ -222,7 +204,7 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
-			MPD_URL:     product.MPD_URL,
+			Videos:      videoResponses,
 		}
 	}
 

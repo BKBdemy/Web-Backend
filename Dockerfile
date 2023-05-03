@@ -5,7 +5,7 @@ COPY . .
 
 # set up mockery & swaggo
 RUN go install github.com/vektra/mockery/v2@latest
-RUN go install github.com/swaggo/swag/cmd/swag@latest
+RUN go install github.com/swaggo/swag/cmd/swag@v1.8.12
 
 RUN go mod download
 RUN mockery --all --with-expecter
