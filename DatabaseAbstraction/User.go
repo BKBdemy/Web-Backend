@@ -17,7 +17,7 @@ type User struct {
 
 func (dbc DBConnector) GetAllUsers() ([]User, error) {
 	// Get all the users from the database
-	rows, err := dbc.DB.Query(context.Background(), "SELECT * FROM users")
+	rows, err := dbc.DB.Query(context.Background(), "SELECT id, username, password, balance, created_at, updated_at, points FROM users")
 	if err != nil {
 		return []User{}, err
 	}
@@ -38,7 +38,7 @@ func (dbc DBConnector) GetAllUsers() ([]User, error) {
 
 func (dbc DBConnector) GetUserByUsername(username string) (User, error) {
 	// Get the user from the database
-	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM users WHERE username = $1", username)
+	row := dbc.DB.QueryRow(context.Background(), "SELECT id, username, password, balance, created_at, updated_at, points FROM users WHERE username = $1", username)
 
 	var user User
 	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt, &user.Points)
@@ -51,7 +51,7 @@ func (dbc DBConnector) GetUserByUsername(username string) (User, error) {
 
 func (dbc DBConnector) GetUserByIndexID(indexID int) (User, error) {
 	// Get the user from the database
-	row := dbc.DB.QueryRow(context.Background(), "SELECT * FROM users WHERE id = $1", indexID)
+	row := dbc.DB.QueryRow(context.Background(), "SELECT id, username, password, balance, created_at, updated_at, points FROM users WHERE id = $1", indexID)
 
 	var user User
 	err := row.Scan(&user.IndexID, &user.Username, &user.Password, &user.Balance, &user.CreatedAt, &user.UpdatedAt, &user.Points)
