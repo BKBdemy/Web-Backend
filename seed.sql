@@ -132,7 +132,7 @@ VALUES ('user', '$argon2id$v=19$m=256000,t=6,p=1$dGVzdHRlc3Q$MMMzLViNOBi+zmhnFWj
 /* password is admin */
 
 INSERT INTO products (name, description, price, image)
-VALUES ('PHP Fundament', 'Willkommen zum PHP Fundamente Kurs auf Udemy! Dieser Kurs bietet Ihnen einen umfassenden und detaillierten Einstieg in die Welt der Webentwicklung mit PHP, einer der beliebtesten und am weitesten verbreiteten Programmiersprachen für das Web.\nDieser Kurs ist speziell für Anfänger konzipiert, die keine oder nur geringe Vorkenntnisse in der Programmierung haben. Wir beginnen mit den grundlegenden Konzepten und arbeiten uns schrittweise durch praktische Beispiele und Übungen, um Ihre Fähigkeiten zu stärken und Ihnen das nötige Vertrauen zu geben, um eigene Webanwendungen zu entwickeln.', 1000, 'product1.jpg');
+VALUES ('PHP Fundament', 'Dieser Kurs führt Sie in die Grundlagen von PHP ein und zeigt Ihnen, wie Sie eine Website strukturieren und gestalten können. Sie lernen auch, wie man Daten verarbeitet, Arrays verwendet und Probleme selbstständig löst. Der Kurs endet mit einem Projekt zur CAESAR-Verschlüsselung und einem Ausblick auf die nächsten Schritte.', 1000, '/static/php.jpeg');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('PHP Fundament - Einführung', 'In diesem Video lernen Sie die Grundlagen von PHP kennen.', 100, 1, 'video1.jpg', 'video1.mp4');
@@ -144,7 +144,7 @@ INSERT INTO video (name, description, points, parent_product_id, thumbnail, file
 VALUES ('PHP Fundament - Arrays', 'In diesem Video lernen Sie die Grundlagen von PHP kennen.', 100, 1, 'video3.jpg', 'video3.mp4');
 
 INSERT INTO products (name, description, price, image)
-VALUES ('Product 2', 'Product 2 description', 2000, 'product2.jpg');
+VALUES ('Python Grundlagen', 'In unserem Kurs “Python lernen in unter 4 Stunden” führen wir dich in die Grundlagen von Python ein. Du lernst, wie man Python installiert und einrichtet, die Grundlagen von Python, die Verwendung von Schleifen, Listen und Funktionen und vieles mehr. Während des Kurses baust du auch zwei Projekte - einen Geburtstagskarten-Generator und ein Number Guessing Spiel - die dir helfen werden, das Gelernte anzuwenden und zu vertiefen.', 2000, '/static/python.jpeg');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Product 2 - Video 1', 'Product 2 - Video 1 description', 200, 2, 'video4.jpg', 'video4.mp4');
