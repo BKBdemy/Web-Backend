@@ -14,7 +14,7 @@ type Product struct {
 	Description string
 	Price       int
 	Image       string
-	Videos      []VideoService.Video
+	Videos      []VideoService.VSVideo
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -46,7 +46,7 @@ type productResponse struct {
 	Description string
 	Price       int
 	Image       string
-	Videos      []VideoService.Video
+	Videos      []VideoService.VSVideo
 }
 
 type productErrorResponse struct {
@@ -75,6 +75,7 @@ func (p ProductService) GetAllProductsHandler(c *gin.Context) {
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
+			Videos:      product.Videos,
 		}
 	}
 
@@ -114,6 +115,7 @@ func (p ProductService) GetProductHandler(c *gin.Context) {
 		Description: product.Description,
 		Price:       product.Price,
 		Image:       product.Image,
+		Videos:      product.Videos,
 	}
 
 	c.JSON(200, responseProduct)
@@ -184,9 +186,9 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 			return
 		}
 		// Convert the videos to video responses
-		videoResponses := make([]VideoService.Video, len(videos))
+		videoResponses := make([]VideoService.VSVideo, len(videos))
 		for i, video := range videos {
-			videoResponses[i] = VideoService.Video{
+			videoResponses[i] = VideoService.VSVideo{
 				IndexID:     video.IndexID,
 				Name:        video.Name,
 				Description: video.Description,

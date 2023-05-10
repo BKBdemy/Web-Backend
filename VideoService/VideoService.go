@@ -6,13 +6,13 @@ import (
 )
 
 type VideoService interface {
-	GetAllVideos() ([]Video, error)
-	GetVideoByIndexID(indexID int) (Video, error)
-	GetVideosOfProduct(productID int) ([]Video, error)
+	GetAllVideos() ([]VSVideo, error)
+	GetVideoByIndexID(indexID int) (VSVideo, error)
+	GetVideosOfProduct(productID int) ([]VSVideo, error)
 	StreamVideo(indexID int) (string, error)
 }
 
-type Video struct {
+type VSVideo struct {
 	IndexID     int
 	Name        string
 	Description string
@@ -34,12 +34,11 @@ func (V VSService) RegisterHandlers(r *gin.Engine, middleware ...gin.HandlerFunc
 }
 
 func (V VSService) GetLabel() string {
-	//TODO implement me
-	panic("implement me")
+	return "Video Service"
 }
 
-func (V VSService) DBVideoToUpstreamType(video DatabaseAbstraction.Video) Video {
-	return Video{
+func (V VSService) DBVideoToUpstreamType(video DatabaseAbstraction.Video) VSVideo {
+	return VSVideo{
 		IndexID:     video.IndexID,
 		Name:        video.Name,
 		Description: video.Description,
@@ -48,13 +47,13 @@ func (V VSService) DBVideoToUpstreamType(video DatabaseAbstraction.Video) Video 
 	}
 }
 
-func (V VSService) GetAllVideos() ([]Video, error) {
+func (V VSService) GetAllVideos() ([]VSVideo, error) {
 	videos, err := V.DB.GetAllVideos()
 	if err != nil {
 		return nil, err
 	}
 
-	convertedVids := make([]Video, len(videos))
+	convertedVids := make([]VSVideo, len(videos))
 	for i, v := range videos {
 		convertedVids[i] = V.DBVideoToUpstreamType(v)
 	}
@@ -62,22 +61,22 @@ func (V VSService) GetAllVideos() ([]Video, error) {
 	return convertedVids, nil
 }
 
-func (V VSService) GetVideoByIndexID(indexID int) (Video, error) {
+func (V VSService) GetVideoByIndexID(indexID int) (VSVideo, error) {
 	video, err := V.DB.GetVideoByIndexID(indexID)
 	if err != nil {
-		return Video{}, err
+		return VSVideo{}, err
 	}
 
 	return V.DBVideoToUpstreamType(video), nil
 }
 
-func (V VSService) GetVideosOfProduct(productID int) ([]Video, error) {
+func (V VSService) GetVideosOfProduct(productID int) ([]VSVideo, error) {
 	videos, err := V.DB.GetVideosByProductIndexID(productID)
 	if err != nil {
 		return nil, err
 	}
 
-	convertedVids := make([]Video, len(videos))
+	convertedVids := make([]VSVideo, len(videos))
 	for i, v := range videos {
 		convertedVids[i] = V.DBVideoToUpstreamType(v)
 	}

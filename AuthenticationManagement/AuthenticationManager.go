@@ -67,7 +67,7 @@ func (am AuthenticationService) AuthenticationMiddleware(c *gin.Context) {
 func (am AuthenticationService) RegisterHandlers(r *gin.Engine, _ ...gin.HandlerFunc) {
 	r.POST("/api/auth/login", am.Login)
 	r.GET("/api/auth/me", am.AuthenticationMiddleware, am.GetUserHandler)
-	r.POST("/api/logout", am.AuthenticationMiddleware, am.LogoutHandler)
+	r.POST("/api/auth/logout", am.AuthenticationMiddleware, am.LogoutHandler)
 	r.POST("/api/auth/register", am.RegisterUserHandler)
 	r.POST("/api/auth/increase_balance/:amount", am.AuthenticationMiddleware, am.IncreaseBalanceHandler)
 }
@@ -263,6 +263,8 @@ func (am AuthenticationService) RegisterUserHandler(c *gin.Context) {
 		})
 		return
 	}
+
+	c.SetCookie("authtoken", token, 7*24*60*60, "", "", true, true)
 
 	c.JSON(200, loginResponse{
 		Token: token,

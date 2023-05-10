@@ -13,7 +13,7 @@ import (
 // @Tags Videos
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} Video
+// @Success 200 {array} VSVideo
 // @Router /api/video [get]
 func (V VSService) GetAllVideosHandler(c *gin.Context) {
 	videos, err := V.DB.GetAllVideos()
@@ -31,8 +31,8 @@ func (V VSService) GetAllVideosHandler(c *gin.Context) {
 // @Tags Videos
 // @Accept  json
 // @Produce  json
-// @Param number path int true "Video ID"
-// @Success 200 {object} Video
+// @Param number path int true "VSVideo ID"
+// @Success 200 {object} VSVideo
 // @Router /api/video/{number} [get]
 func (V VSService) GetVideoInfoHandler(c *gin.Context) {
 	videoID := c.Param("number")
@@ -56,7 +56,7 @@ func (V VSService) GetVideoInfoHandler(c *gin.Context) {
 // @Tags Videos
 // @Accept  json
 // @Produce  json
-// @Param number path int true "Video ID"
+// @Param number path int true "VSVideo ID"
 // @Success 200 {string} string	"success"
 // @Router /api/video/{number}/progress [post]
 // @Security		ApiKeyAuth
@@ -90,7 +90,7 @@ func (V VSService) MarkFinishedEndpoint(c *gin.Context) {
 // @Summary Start video stream
 // @Description Start video stream
 // @Tags Videos
-// @Param number path int true "Video ID"
+// @Param number path int true "VSVideo ID"
 // @Success 200
 // @Security ApiKeyAuth
 func (V VSService) StartVideoStream(c *gin.Context) {
@@ -117,7 +117,7 @@ func (V VSService) StartVideoStream(c *gin.Context) {
 // @Tags Videos
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} Video
+// @Success 200 {array} VSVideo
 // @Router /api/video/watched [get]
 // @Security ApiKeyAuth
 func (V VSService) GetWatchedVideos(c *gin.Context) {

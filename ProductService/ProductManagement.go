@@ -2,6 +2,7 @@ package ProductService
 
 import (
 	"EntitlementServer/DatabaseAbstraction"
+	"EntitlementServer/VideoService"
 	"errors"
 	"github.com/sirupsen/logrus"
 )
@@ -11,14 +12,11 @@ func (p ProductService) GetProduct(ProductID int) (Product, error) {
 	if err != nil {
 		return Product{}, err
 	}
+	if product.IndexID == 0 {
+		return Product{}, errors.New("product not found")
+	}
 
-	return Product{
-		ID:          product.IndexID,
-		Name:        product.Name,
-		Description: product.Description,
-		Price:       product.Price,
-		Image:       product.Image,
-	}, nil
+	return p.enrichDatabaseProducts([]DatabaseAbstraction.Product{product})[0], nil
 }
 
 func (p ProductService) GetAllProducts() []Product {
@@ -112,12 +110,29 @@ func (p ProductService) enrichDatabaseProducts(products []DatabaseAbstraction.Pr
 	// Convert the products to the correct format
 	var convertedProducts []Product
 	for _, product := range products {
+		// Fetch the videos for the product
+		videos, err := p.DB.GetVideosByProductIndexID(product.IndexID)
+		if err != nil {
+			continue
+		}
+		vsvideos := make([]VideoService.VSVideo, len(videos))
+		for i, video := range videos {
+			vsvideos[i] = VideoService.VSVideo{
+				IndexID:     video.IndexID,
+				Name:        video.Name,
+				Description: video.Description,
+				Points:      video.Points,
+				Thumbnail:   video.Thumbnail,
+			}
+		}
+
 		convertedProducts = append(convertedProducts, Product{
 			ID:          product.IndexID,
 			Name:        product.Name,
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
+			Videos:      vsvideos,
 		})
 	}
 
