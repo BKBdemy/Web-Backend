@@ -39,8 +39,8 @@ jobs:
       with:
         command: init
     
-    - name: Generate mock interfaces
-      run: mockery --all --with-expecter 
+    - name: go generate
+      run: go generate ./...
     
     - name: Build
       run: go build -v ./...

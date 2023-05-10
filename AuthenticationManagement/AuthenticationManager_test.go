@@ -3,7 +3,7 @@ package AuthenticationManagement_test
 import (
 	"EntitlementServer/AuthenticationManagement"
 	"EntitlementServer/DatabaseAbstraction"
-	"EntitlementServer/mocks"
+	"EntitlementServer/DatabaseAbstraction/mocks"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"

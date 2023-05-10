@@ -14,6 +14,7 @@ type DBConnector struct {
 	DB *pgxpool.Pool
 }
 
+//go:generate mockery --name DBOrm
 type DBOrm interface {
 	GetAllProducts() ([]Product, error)
 	GetProductByIndexID(indexID int) (Product, error)
