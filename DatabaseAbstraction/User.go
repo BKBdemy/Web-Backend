@@ -110,7 +110,7 @@ func (dbc DBConnector) UpdateUserUsername(indexID int, username string) error {
 
 func (dbc DBConnector) GetOwnedProducts(indexID int) ([]Product, error) {
 	// Get all the products from the database
-	rows, err := dbc.DB.Query(context.Background(), "SELECT products.* FROM products INNER JOIN user_purchases ON products.id = user_purchases.product_id WHERE user_purchases.user_id = $1", indexID)
+	rows, err := dbc.DB.Query(context.Background(), "SELECT products.id, products.name, products.description, products.price, products.image, products.difficulty, products.created_at, products.updated_at FROM products INNER JOIN user_purchases ON products.id = user_purchases.product_id WHERE user_purchases.user_id = $1", indexID)
 	if err != nil {
 		return []Product{}, err
 	}
@@ -119,7 +119,7 @@ func (dbc DBConnector) GetOwnedProducts(indexID int) ([]Product, error) {
 	var products []Product
 	for rows.Next() {
 		var product Product
-		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt)
+		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.Difficulty, &product.CreatedAt, &product.UpdatedAt)
 		if err != nil {
 			return []Product{}, err
 		}
