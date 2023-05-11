@@ -132,6 +132,7 @@ func (p ProductService) enrichDatabaseProducts(products []DatabaseAbstraction.Pr
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
+			Difficulty:  product.Difficulty,
 			Videos:      vsvideos,
 		})
 	}

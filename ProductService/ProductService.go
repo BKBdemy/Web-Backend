@@ -14,6 +14,7 @@ type Product struct {
 	Description string
 	Price       int
 	Image       string
+	Difficulty  int
 	Videos      []VideoService.VSVideo
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
@@ -46,6 +47,7 @@ type productResponse struct {
 	Description string
 	Price       int
 	Image       string
+	Difficulty  int
 	Videos      []VideoService.VSVideo
 }
 
@@ -75,6 +77,7 @@ func (p ProductService) GetAllProductsHandler(c *gin.Context) {
 			Description: product.Description,
 			Price:       product.Price,
 			Image:       product.Image,
+			Difficulty:  product.Difficulty,
 			Videos:      product.Videos,
 		}
 	}
@@ -116,6 +119,7 @@ func (p ProductService) GetProductHandler(c *gin.Context) {
 		Price:       product.Price,
 		Image:       product.Image,
 		Videos:      product.Videos,
+		Difficulty:  product.Difficulty,
 	}
 
 	c.JSON(200, responseProduct)
@@ -207,6 +211,7 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 			Price:       product.Price,
 			Image:       product.Image,
 			Videos:      videoResponses,
+			Difficulty:  product.Difficulty,
 		}
 	}
 

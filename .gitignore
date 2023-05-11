@@ -2,3 +2,5 @@
 tmp
 mocks
 tmp
+docs/
+DatabaseAbstraction/mocks/
