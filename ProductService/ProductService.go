@@ -130,8 +130,8 @@ func (p ProductService) GetLabel() string {
 }
 
 type purchaseProductResponse struct {
-	error string
-	msg   string
+	Error   string
+	Message string
 }
 
 // PurchaseProductHandler godoc
@@ -147,11 +147,10 @@ type purchaseProductResponse struct {
 // @Security ApiKeyAuth
 // @Router /api/products/{id}/purchase [post]
 func (p ProductService) PurchaseProductHandler(c *gin.Context) {
-	// TODO: Fix error 500 on purchase
 	productID := c.Param("id")
 	convertedProductID, err := strconv.Atoi(productID)
 	if err != nil {
-		c.JSON(400, purchaseProductResponse{error: "invalid product id"})
+		c.JSON(400, purchaseProductResponse{Error: "invalid product id"})
 		return
 	}
 
@@ -159,11 +158,11 @@ func (p ProductService) PurchaseProductHandler(c *gin.Context) {
 
 	err = p.PurchaseProduct(convertedProductID, user)
 	if err != nil {
-		c.JSON(500, purchaseProductResponse{error: "error purchasing product: " + err.Error()})
+		c.JSON(400, purchaseProductResponse{Error: "Error purchasing product: " + err.Error()})
 		return
 	}
 
-	c.JSON(200, purchaseProductResponse{msg: "product purchased"})
+	c.JSON(200, purchaseProductResponse{Message: "product purchased"})
 }
 
 // GetOwnedProductsHandler godoc
@@ -186,7 +185,7 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 		// Get the videos for the product
 		videos, err := p.DB.GetVideosByProductIndexID(product.ID)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "error getting videos"})
+			c.JSON(500, gin.H{"Error": "Error getting videos"})
 			return
 		}
 		// Convert the videos to video responses

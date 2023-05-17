@@ -63,7 +63,7 @@ func (p ProductService) PurchaseProduct(ProductID int, user DatabaseAbstraction.
 	err = p.DB.DecreaseUserBalance(user.IndexID, product.Price)
 	if err != nil {
 		logrus.Error(err)
-		// If this error happens, we have probably just prevented a racy purchase
+		// If this Error happens, we have probably just prevented a racy purchase
 		return err
 	}
 
