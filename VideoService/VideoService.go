@@ -26,9 +26,9 @@ type VSService struct {
 }
 
 func (V VSService) RegisterHandlers(r *gin.Engine, middleware ...gin.HandlerFunc) {
-	r.GET("/api/video/:number", middleware[0], V.StartVideoStream)
+	r.GET("/api/video/:number/stream", middleware[0], V.StartVideoStream)
 	r.GET("/api/video", middleware[0], V.GetAllVideosHandler)
-	r.GET("/api/video/:number/info", middleware[0], V.GetVideoInfoHandler)
+	r.GET("/api/video/:number", middleware[0], V.GetVideoInfoHandler)
 	r.POST("/api/video/:number/progress", middleware[0], V.MarkFinishedEndpoint)
 	r.GET("/api/video/watched", middleware[0], V.GetWatchedVideos)
 }

@@ -93,6 +93,7 @@ func (V VSService) MarkFinishedEndpoint(c *gin.Context) {
 // @Param number path int true "VSVideo ID"
 // @Success 200
 // @Security ApiKeyAuth
+// @Router /api/video/{number}/stream [get]
 func (V VSService) StartVideoStream(c *gin.Context) {
 	videoID := c.Param("number")
 
