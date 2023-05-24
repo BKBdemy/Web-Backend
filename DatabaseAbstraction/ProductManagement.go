@@ -12,13 +12,14 @@ type Product struct {
 	Price       int
 	Image       string
 	Difficulty  int
+	PreviewURL  string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
 
 func (dbc DBConnector) GetAllProducts() ([]Product, error) {
 	// Get all the products from the database
-	rows, err := dbc.DB.Query(context.Background(), "SELECT id, name, description, price, image, created_at, updated_at, difficulty FROM products")
+	rows, err := dbc.DB.Query(context.Background(), "SELECT id, name, description, price, image, created_at, updated_at, difficulty, preview_url FROM products")
 	if err != nil {
 		return []Product{}, err
 	}
@@ -28,7 +29,7 @@ func (dbc DBConnector) GetAllProducts() ([]Product, error) {
 
 	for rows.Next() {
 		var product Product
-		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt, &product.Difficulty)
+		err := rows.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt, &product.Difficulty, &product.PreviewURL)
 		if err != nil {
 			return []Product{}, err
 		}
@@ -40,10 +41,10 @@ func (dbc DBConnector) GetAllProducts() ([]Product, error) {
 
 func (dbc DBConnector) GetProductByIndexID(indexID int) (Product, error) {
 	// Get the product from the database
-	row := dbc.DB.QueryRow(context.Background(), "SELECT id, name, description, price, image, created_at, updated_at, difficulty FROM products WHERE id = $1", indexID)
+	row := dbc.DB.QueryRow(context.Background(), "SELECT id, name, description, price, image, created_at, updated_at, difficulty, preview_url FROM products WHERE id = $1", indexID)
 
 	var product Product
-	err := row.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt, &product.Difficulty)
+	err := row.Scan(&product.IndexID, &product.Name, &product.Description, &product.Price, &product.Image, &product.CreatedAt, &product.UpdatedAt, &product.Difficulty, &product.PreviewURL)
 	if err != nil {
 		return Product{}, err
 	}

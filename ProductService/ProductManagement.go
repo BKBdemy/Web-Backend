@@ -91,20 +91,6 @@ func (p ProductService) GetOwnedProducts(user DatabaseAbstraction.User) []Produc
 	return p.enrichDatabaseProducts(ownedProducts)
 }
 
-func (p ProductService) AddProduct(Product Product) (int, error) {
-	newID, err := p.DB.AddProduct(DatabaseAbstraction.Product{
-		Name:        Product.Name,
-		Description: Product.Description,
-		Price:       Product.Price,
-		Image:       Product.Image,
-	})
-	if err != nil {
-		return -1, err
-	}
-
-	return newID, nil
-}
-
 // enrichDatabaseProducts takes a slice of database products and converts them to the ProductManagement format, including the license keys
 func (p ProductService) enrichDatabaseProducts(products []DatabaseAbstraction.Product) []Product {
 	// Convert the products to the correct format
