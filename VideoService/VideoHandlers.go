@@ -3,7 +3,6 @@ package VideoService
 import (
 	"EntitlementServer/DatabaseAbstraction"
 	"github.com/gin-gonic/gin"
-	"os"
 	"strconv"
 )
 
@@ -108,8 +107,8 @@ func (V VSService) StartVideoStream(c *gin.Context) {
 	}
 
 	// Start stream of file with basepath + filename
-	basepath := os.Getenv("VIDEO_BASE_PATH")
-	c.File(basepath + video.Filename)
+	//basepath := os.Getenv("VIDEO_BASE_PATH")
+	c.File(video.Filename)
 }
 
 // GetWatchedVideos godoc
