@@ -133,6 +133,8 @@ INSERT INTO users (username, password)
 VALUES ('user', '$argon2id$v=19$m=256000,t=6,p=1$dGVzdHRlc3Q$MMMzLViNOBi+zmhnFWj4y1y6TqYfRvmUAI6BiH30mIk');
 /* password is admin */
 
+/* PHP */
+
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
 VALUES ('PHP Fundament', 'Dieser Kurs führt Sie in die Grundlagen von PHP ein und zeigt Ihnen, wie Sie eine Website strukturieren und gestalten können. Sie lernen auch, wie man Daten verarbeitet, Arrays verwendet und Probleme selbstständig löst. Der Kurs endet mit einem Projekt zur CAESAR-Verschlüsselung und einem Ausblick auf die nächsten Schritte.', 1000, '/static/php.jpeg', '/static/previews/1.mp4', 2);
 
@@ -145,7 +147,7 @@ VALUES ('PHP Fundament - Variablen', 'In diesem Video lernen Sie die Grundlagen 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('PHP Fundament - Arrays', 'In diesem Video lernen Sie die Grundlagen von PHP kennen.', 100, 1, 'video3.jpg', 'video3.mp4');
 
-
+/* Python */
 
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
 VALUES ('Python Grundlagen', 'In unserem Kurs “Python lernen in unter 4 Stunden” führen wir dich in die Grundlagen von Python ein. Du lernst, wie man Python installiert und einrichtet, die Grundlagen von Python, die Verwendung von Schleifen, Listen und Funktionen und vieles mehr. Während des Kurses baust du auch zwei Projekte - einen Geburtstagskarten-Generator und ein Number Guessing Spiel - die dir helfen werden, das Gelernte anzuwenden und zu vertiefen.', 2000, '/static/python.jpeg', '/static/previews/2.mp4', 1);
@@ -179,6 +181,30 @@ VALUES ('Vergleiche und Booleans', 'Dieses Kapitel behandelt Vergleichsoperatore
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Die for-Schleife', 'Das letzte Kapitel führt Sie in die Verwendung von ''for''-Schleifen in Python ein. Sie lernen, wie Sie eine Schleife erstellen, durchlaufen und steuern und wie Sie mit Schleifen verschiedene Arten von Problemen lösen können.', 200, 2, 'video5.jpg', '/static/python/Abschnitt 11.mp4');
+
+/* HTML & CSS */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('HTML & CSS - Eigene Homepage', 'Erstelle eine eigene Homepage.', 500, 'htmlcss.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Einführung', 'In diesem Kapitel lernen Sie die Grundlagen von HTML kennen. Sie erfahren, wie Sie eine HTML-Datei erstellen und wie Sie die grundlegenden HTML-Tags verwenden.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 2.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('HTML Editor', 'Dieses Kapitel behandelt das Setup von Visual Studio Code.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 3.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('HTML Architektur', 'In diesem Kapitel lernen Sie die Grundstruktur eines HTML-Dokuments.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 4.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('CSS Basics', 'Dieses Kapitel behandelt die Grundlagen von CSS. Sie lernen, wie Sie CSS in Ihre HTML-Datei einbinden und wie Sie CSS verwenden, um das Aussehen Ihrer Website zu ändern.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 5.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('HTML & CSS Layouts', 'In diesem Kapitel lernen Sie, wie Sie mit HTML und CSS verschiedene Layouts erstellen können.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 6.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('CSS Styling & HTML Embeds', 'Dieses Kapitel behandelt die Verwendung von CSS, um das Aussehen Ihrer Website zu ändern. Sie lernen, wie Sie Texte, Bilder und Links formatieren und wie Sie Videos und Karten in Ihre Website einbetten.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 7.mp4');
+
+
 
 INSERT INTO user_purchases (user_id, product_id)
 VALUES (1, 1);
