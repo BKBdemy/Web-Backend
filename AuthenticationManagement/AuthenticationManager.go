@@ -162,6 +162,7 @@ type meResponse struct {
 	Username  string `json:"username"`
 	Balance   int    `json:"balance"`
 	CreatedAt string `json:"created_at"`
+	Points    int    `json:"points"`
 }
 
 // GetUserHandler godoc
@@ -182,6 +183,7 @@ func (am AuthenticationService) GetUserHandler(c *gin.Context) {
 		Username:  user.(DatabaseAbstraction.User).Username,
 		Balance:   user.(DatabaseAbstraction.User).Balance,
 		CreatedAt: user.(DatabaseAbstraction.User).CreatedAt.Format("2006-01-02 15:04:05"),
+		Points:    user.(DatabaseAbstraction.User).Points,
 	})
 }
 
