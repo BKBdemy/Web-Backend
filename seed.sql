@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS user_purchases CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS video CASCADE;
-DROP TABLE IF EXISTS video_comments CASCADE;
+DROP TABLE IF EXISTS product_comments CASCADE;
 DROP TABLE IF EXISTS user_watched_videos CASCADE;
 DROP TABLE IF EXISTS user_tokens CASCADE;
 
@@ -184,7 +184,7 @@ VALUES ('Die for-Schleife', 'Das letzte Kapitel führt Sie in die Verwendung von
 
 /* HTML & CSS */
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
-VALUES ('HTML & CSS - Eigene Homepage', 'Erstelle eine eigene Homepage.', 500, 'htmlcss.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
+VALUES ('HTML & CSS - Eigene Homepage', 'Erstelle eine eigene Homepage.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Einführung', 'In diesem Kapitel lernen Sie die Grundlagen von HTML kennen. Sie erfahren, wie Sie eine HTML-Datei erstellen und wie Sie die grundlegenden HTML-Tags verwenden.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 2.mp4');
@@ -229,8 +229,8 @@ VALUES (1, 1, 'das ist ja krass bro');
 CREATE INDEX idx_user_purchases_user_id ON user_purchases (user_id);
 CREATE INDEX idx_user_purchases_product_id ON user_purchases (product_id);
 
-CREATE INDEX idx_video_comments_user_id ON video_comments (user_id);
-CREATE INDEX idx_video_comments_video_id ON video_comments (video_id);
+CREATE INDEX idx_video_comments_user_id ON product_comments (user_id);
+CREATE INDEX idx_video_comments_video_id ON product_comments (course_id);
 
 CREATE INDEX idx_video_parent_product_id ON video (parent_product_id);
 
