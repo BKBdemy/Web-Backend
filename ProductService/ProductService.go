@@ -266,7 +266,7 @@ func (p ProductService) GetProductComments(c *gin.Context) {
 		}
 	}
 
-	c.JSON(200, comments)
+	c.JSON(200, response)
 }
 
 type commentRequest struct {
