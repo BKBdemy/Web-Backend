@@ -249,7 +249,7 @@ func (p ProductService) GetProductComments(c *gin.Context) {
 		return
 	}
 
-	comments, err := p.DB.GetProductComments(convertedProductID)
+	comments, err := p.DB.GetCommentsByProductID(convertedProductID)
 	if err != nil {
 		c.JSON(400, purchaseProductResponse{Error: "Error getting comments: " + err.Error()})
 		return
@@ -302,7 +302,7 @@ func (p ProductService) PostProductComment(c *gin.Context) {
 		return
 	}
 
-	err = p.DB.AddProductComment(convertedProductID, user.IndexID, comment.Comment)
+	err = p.DB.AddComment(convertedProductID, user.IndexID, comment.Comment)
 	if err != nil {
 		c.JSON(400, purchaseProductResponse{Error: "Error posting comment: " + err.Error()})
 		return
