@@ -2,8 +2,14 @@ package VideoService
 
 import (
 	"EntitlementServer/DatabaseAbstraction"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"mime"
+	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 // GetAllVideosHandler godoc
@@ -108,7 +114,8 @@ func (V VSService) StartVideoStream(c *gin.Context) {
 
 	// Start stream of file with basepath + filename
 	//basepath := os.Getenv("VIDEO_BASE_PATH")
-	c.File(video.Filename)
+	serveFile(c, video.Filename)
+	//c.File(video.Filename)
 }
 
 // GetWatchedVideos godoc
@@ -132,4 +139,76 @@ func (V VSService) GetWatchedVideos(c *gin.Context) {
 	}
 
 	c.JSON(200, videos)
+}
+
+// Custom ranged file implementation
+func serveFile(c *gin.Context, filePath string) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		c.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			println(fmt.Sprintf("Error closing file: %s", err.Error()))
+		}
+	}(file)
+
+	fileInfo, err := file.Stat()
+	if err != nil {
+		c.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	fileSize := fileInfo.Size()
+	mimeType := mime.TypeByExtension(filepath.Ext(filePath))
+
+	rangeHeader := c.GetHeader("Range")
+	if rangeHeader == "" {
+		http.ServeContent(c.Writer, c.Request, filePath, fileInfo.ModTime(), file)
+		return
+	}
+
+	start, end := parseRange(rangeHeader, fileSize)
+	if end == -1 {
+		end = fileSize - 1
+	}
+
+	if _, err := file.Seek(start, 0); err != nil {
+		c.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	bytes := make([]byte, end-start+1)
+	if _, err := file.Read(bytes); err != nil {
+		c.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.Header("Content-Range", fmt.Sprintf("bytes %d-%d/%d", start, end, fileSize))
+	c.Header("Accept-Ranges", "bytes")
+	c.Data(http.StatusPartialContent, mimeType, bytes)
+}
+
+func parseRange(rangeHeader string, fileSize int64) (start, end int64) {
+	var err error
+	if strings.HasPrefix(rangeHeader, "bytes=") {
+		rangeStr := rangeHeader[6:]
+		parts := strings.Split(rangeStr, "-")
+		start, err = strconv.ParseInt(parts[0], 10, 64)
+		if err != nil {
+			return
+		}
+
+		if len(parts) > 1 && parts[1] != "" {
+			end, err = strconv.ParseInt(parts[1], 10, 64)
+			if err != nil {
+				return
+			}
+		} else {
+			end = -1
+		}
+	}
+	return
 }
