@@ -229,6 +229,7 @@ type commentResponse struct {
 	Text      string
 	Username  string
 	ProductID int
+	CreatedAt time.Time
 }
 
 // GetProductComments godoc
@@ -263,6 +264,7 @@ func (p ProductService) GetProductComments(c *gin.Context) {
 			Text:      comment.Comment,
 			Username:  comment.Username,
 			ProductID: comment.ProductID,
+			CreatedAt: comment.CreatedAt,
 		}
 	}
 

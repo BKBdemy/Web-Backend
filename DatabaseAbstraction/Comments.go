@@ -1,18 +1,22 @@
 package DatabaseAbstraction
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 type Comment struct {
 	IndexID   int
 	Username  string
 	ProductID int
 	Comment   string
+	CreatedAt time.Time
 }
 
 // Get comments of a product
 func (dbc DBConnector) GetCommentsByProductID(productID int) ([]Comment, error) {
 	// Get the comments from the database
-	rows, err := dbc.DB.Query(context.Background(), "SELECT product_comments.id, username, product_comments.course_id, comment FROM product_comments JOIN users ON users.id = user_id WHERE course_id = $1 ORDER BY product_comments.id DESC", productID)
+	rows, err := dbc.DB.Query(context.Background(), "SELECT product_comments.id, username, product_comments.course_id, comment, product_comments.created_at FROM product_comments JOIN users ON users.id = user_id WHERE course_id = $1 ORDER BY product_comments.id DESC", productID)
 	if err != nil {
 		return []Comment{}, err
 	}
@@ -22,7 +26,7 @@ func (dbc DBConnector) GetCommentsByProductID(productID int) ([]Comment, error) 
 
 	for rows.Next() {
 		var comment Comment
-		err := rows.Scan(&comment.IndexID, &comment.Username, &comment.ProductID, &comment.Comment)
+		err := rows.Scan(&comment.IndexID, &comment.Username, &comment.ProductID, &comment.Comment, &comment.CreatedAt)
 		if err != nil {
 			return []Comment{}, err
 		}
