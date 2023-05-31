@@ -4,6 +4,7 @@ import (
 	"EntitlementServer/DatabaseAbstraction"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
 	"mime"
 	"net/http"
 	"os"
@@ -142,6 +143,9 @@ func (V VSService) GetWatchedVideos(c *gin.Context) {
 }
 
 // Custom ranged file implementation
+// Takes a Range header and returns the file bytes according to the given start and end byte positions
+// Required for serving large files effectively, which we're doing here because we're streaming video
+// even avoids loading the file into memory, IO is streamed directly to nginx -> client
 func serveFile(c *gin.Context, filePath string) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -155,6 +159,7 @@ func serveFile(c *gin.Context, filePath string) {
 		}
 	}(file)
 
+	// Get file info, we need the file size for range requests
 	fileInfo, err := file.Stat()
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
@@ -162,35 +167,42 @@ func serveFile(c *gin.Context, filePath string) {
 	}
 
 	fileSize := fileInfo.Size()
+	// infer Content-Type from file name extension
 	mimeType := mime.TypeByExtension(filepath.Ext(filePath))
 
 	rangeHeader := c.GetHeader("Range")
 	if rangeHeader == "" {
+		// No range header, serve full file
 		http.ServeContent(c.Writer, c.Request, filePath, fileInfo.ModTime(), file)
 		return
 	}
 
+	// Parse range header to get start and end byte positions
 	start, end := parseRange(rangeHeader, fileSize)
 	if end == -1 {
 		end = fileSize - 1
 	}
 
+	// Open file and seek to start position
 	if _, err := file.Seek(start, 0); err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	bytes := make([]byte, end-start+1)
-	if _, err := file.Read(bytes); err != nil {
+	// Send headers
+	c.Header("Content-Range", fmt.Sprintf("bytes %d-%d/%d", start, end, fileSize))
+	c.Header("Accept-Ranges", "bytes")
+	c.Header("Content-Type", mimeType)
+	c.Status(http.StatusPartialContent)
+
+	// Stream the file content
+	if _, err := io.CopyN(c.Writer, file, end-start+1); err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
-
-	c.Header("Content-Range", fmt.Sprintf("bytes %d-%d/%d", start, end, fileSize))
-	c.Header("Accept-Ranges", "bytes")
-	c.Data(http.StatusPartialContent, mimeType, bytes)
 }
 
+// Parses a HTTP Range header and returns the start and end byte positions
 func parseRange(rangeHeader string, fileSize int64) (start, end int64) {
 	var err error
 	if strings.HasPrefix(rangeHeader, "bytes=") {
