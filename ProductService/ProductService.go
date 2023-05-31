@@ -302,7 +302,7 @@ func (p ProductService) PostProductComment(c *gin.Context) {
 		return
 	}
 
-	err = p.DB.AddComment(convertedProductID, user.IndexID, comment.Comment)
+	err = p.DB.AddComment(user.IndexID, convertedProductID, comment.Comment)
 	if err != nil {
 		c.JSON(400, purchaseProductResponse{Error: "Error posting comment: " + err.Error()})
 		return

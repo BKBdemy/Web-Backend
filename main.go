@@ -37,6 +37,7 @@ func main() {
 	DB.DB = conn
 	defer conn.Close()
 
+	// Instantiate the service structs and pass DB connection to them
 	authenticationSvc := AuthenticationManagement.AuthenticationService{DB: &DB}
 	productSvc := ProductService.ProductService{DB: &DB}
 	videoSvc := VideoService.VSService{DB: &DB}
@@ -51,6 +52,7 @@ func main() {
 	productSvc.RegisterHandlers(r, authenticationSvc.AuthenticationMiddleware)
 	videoSvc.RegisterHandlers(r, authenticationSvc.AuthenticationMiddleware)
 
+	// Register the Swagger documentation handler
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	err = r.Run(":8080")
