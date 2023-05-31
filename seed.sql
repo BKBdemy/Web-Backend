@@ -184,25 +184,25 @@ VALUES ('Die for-Schleife', 'Das letzte Kapitel führt Sie in die Verwendung von
 
 /* HTML & CSS */
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
-VALUES ('HTML & CSS - Eigene Homepage', 'Erstelle eine eigene Homepage.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
+VALUES ('Erstelle deine eigene Webseite mit HTML & CSS', 'Tauche ein in die faszinierende Welt der Webentwicklung und erschaffe deine eigene atemberaubende Webseite. Lerne die Grundlagen von HTML und CSS, um deine kreativen Ideen zum Leben zu erwecken. Egal, ob du Anfänger bist oder bereits erste Erfahrungen hast, dieser Kurs bietet dir das nötige Wissen, um eine beeindruckende Homepage zu erstellen.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Einführung', 'In diesem Kapitel lernen Sie die Grundlagen von HTML kennen. Sie erfahren, wie Sie eine HTML-Datei erstellen und wie Sie die grundlegenden HTML-Tags verwenden.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 2.mp4');
+VALUES ('Einführung in die aufregende Welt von HTML', 'Tauchen Sie ein in die spannende Welt von HTML und entdecken Sie die Grundlagen, um eine beeindruckende Webseite zu erstellen. Lernen Sie, wie Sie eine HTML-Datei von Grund auf erstellen und die mächtigen HTML-Tags nutzen, um Ihre Vision zum Leben zu erwecken.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 2.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('HTML Editor', 'Dieses Kapitel behandelt das Setup von Visual Studio Code.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 3.mp4');
+VALUES ('Der ultimative HTML Editor', 'Lassen Sie sich von uns in die Geheimnisse des Visual Studio Code einweihen und machen Sie sich bereit, Ihre Entwicklungsreise auf die nächste Stufe zu heben. Entdecken Sie die zahlreichen Features und Tools, die Ihnen zur Verfügung stehen, um Ihre HTML-Kreationen zu perfektionieren.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 3.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('HTML Architektur', 'In diesem Kapitel lernen Sie die Grundstruktur eines HTML-Dokuments.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 4.mp4');
+VALUES ('Meistern Sie die Kunst der HTML Architektur', 'Tauchen Sie ein in die faszinierende Welt der HTML-Architektur und lernen Sie, wie Sie die Grundstruktur eines HTML-Dokuments gestalten. Entdecken Sie die Bausteine, die Ihre Webseite zusammenhalten, und lernen Sie, wie Sie sie effektiv einsetzen, um Ihre Inhalte optimal zur Geltung zu bringen.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 4.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('CSS Basics', 'Dieses Kapitel behandelt die Grundlagen von CSS. Sie lernen, wie Sie CSS in Ihre HTML-Datei einbinden und wie Sie CSS verwenden, um das Aussehen Ihrer Website zu ändern.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 5.mp4');
+VALUES ('CSS Basics: Meistern Sie die Kunst der Gestaltung', 'Erweitern Sie Ihre Webentwicklungsfähigkeiten und beherrschen Sie die Grundlagen von CSS. Lernen Sie, wie Sie CSS in Ihre HTML-Dateien einbinden und verwenden Sie es, um das Aussehen Ihrer Website nach Ihren Vorstellungen anzupassen. Tauchen Sie ein in eine Welt voller Stil und Kreativität.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 5.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('HTML & CSS Layouts', 'In diesem Kapitel lernen Sie, wie Sie mit HTML und CSS verschiedene Layouts erstellen können.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 6.mp4');
+VALUES ('HTML & CSS Layouts: Kreativität ohne Grenzen', 'Heben Sie Ihr Webdesign auf ein neues Niveau und lernen Sie, wie Sie mit HTML und CSS faszinierende Layouts erstellen. Entdecken Sie Techniken, um Ihre Inhalte zu organisieren und eine optimale Benutzererfahrung zu bieten. Lassen Sie Ihrer Kreativität freien Lauf und gestalten Sie beeindruckende Webseiten.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 6.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('CSS Styling & HTML Embeds', 'Dieses Kapitel behandelt die Verwendung von CSS, um das Aussehen Ihrer Website zu ändern. Sie lernen, wie Sie Texte, Bilder und Links formatieren und wie Sie Videos und Karten in Ihre Website einbetten.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 7.mp4');
+VALUES ('CSS Styling & HTML Embeds: Machen Sie Ihre Website zum Blickfang', 'Entdecken Sie die faszinierende Welt des CSS-Stylings und erfahren Sie, wie Sie das Aussehen Ihrer Website aufregend und ansprechend gestalten können. Lernen Sie, wie Sie Texte, Bilder und Links formatieren und beeindruckende Videos und Karten in Ihre Webseite einbetten. Bringen Sie Ihre Website zum Strahlen!', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 7.mp4');
 
 
 
