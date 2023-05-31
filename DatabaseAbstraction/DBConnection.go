@@ -11,7 +11,7 @@ import (
 )
 
 type DBConnector struct {
-	DB *pgxpool.Pool
+	DB *pgxpool.Pool // using a pool allows for usage without mutexes
 }
 
 //go:generate mockery --name DBOrm

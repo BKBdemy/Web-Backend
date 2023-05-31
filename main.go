@@ -38,9 +38,9 @@ func main() {
 	defer conn.Close()
 
 	// Instantiate the service structs and pass DB connection to them
-	authenticationSvc := AuthenticationManagement.AuthenticationService{DB: &DB}
-	productSvc := ProductService.ProductService{DB: &DB}
-	videoSvc := VideoService.VSService{DB: &DB}
+	authenticationSvc := AuthenticationManagement.AuthenticationService{DB: &DB} // handles authentication
+	productSvc := ProductService.ProductService{DB: &DB}                         // handles products
+	videoSvc := VideoService.VSService{DB: &DB}                                  // handles videos
 
 	r := gin.Default()
 

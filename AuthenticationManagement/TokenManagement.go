@@ -17,14 +17,17 @@ func (am AuthenticationService) CreateToken(userid int) (string, error) {
 		return "", err
 	}
 
+	// Use random bytes as salt
 	randomBytes := make([]byte, argon2settings.saltLength)
 	_, err = rand.Read(randomBytes)
 	if err != nil {
 		return "", err
 	}
 
+	// Create a token by hashing user+their hashed password+the random bytes
 	token := fmt.Sprintf("%x", sha256.Sum256([]byte(user.Username+user.Password+string(randomBytes))))
 
+	// by default, tokens expire after 7 days
 	err = am.DB.AddToken(user.IndexID, token, time.Now().Add(time.Hour*24*7))
 	if err != nil {
 		return "", err
