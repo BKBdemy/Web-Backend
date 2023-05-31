@@ -184,7 +184,7 @@ VALUES ('Die for-Schleife', 'Das letzte Kapitel führt Sie in die Verwendung von
 
 /* HTML & CSS */
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
-VALUES ('Erstelle deine eigene Webseite mit HTML & CSS', 'Tauche ein in die faszinierende Welt der Webentwicklung und erschaffe deine eigene atemberaubende Webseite. Lerne die Grundlagen von HTML und CSS, um deine kreativen Ideen zum Leben zu erwecken. Egal, ob du Anfänger bist oder bereits erste Erfahrungen hast, dieser Kurs bietet dir das nötige Wissen, um eine beeindruckende Homepage zu erstellen.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
+VALUES ('Erstelle deine eigene Webseite', 'Tauche ein in die faszinierende Welt der Webentwicklung und erschaffe deine eigene atemberaubende Webseite. Lerne die Grundlagen von HTML und CSS, um deine kreativen Ideen zum Leben zu erwecken. Egal, ob du Anfänger bist oder bereits erste Erfahrungen hast, dieser Kurs bietet dir das nötige Wissen, um eine beeindruckende Homepage zu erstellen.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Einführung in die aufregende Welt von HTML', 'Tauchen Sie ein in die spannende Welt von HTML und entdecken Sie die Grundlagen, um eine beeindruckende Webseite zu erstellen. Lernen Sie, wie Sie eine HTML-Datei von Grund auf erstellen und die mächtigen HTML-Tags nutzen, um Ihre Vision zum Leben zu erwecken.', 200, 3, 'video1.jpg', '/static/htmlcss/Abschnitt 2.mp4');
@@ -223,7 +223,6 @@ VALUES (2, 1, 'Das ist auch ein Kommentar');
 
 INSERT INTO product_comments (user_id, course_id, comment)
 VALUES (1, 1, 'das ist ja krass bro');
-
 
 /* --Indexes-- */
 CREATE INDEX idx_user_purchases_user_id ON user_purchases (user_id);
