@@ -12,7 +12,7 @@ type Comment struct {
 // Get comments of a product
 func (dbc DBConnector) GetCommentsByProductID(productID int) ([]Comment, error) {
 	// Get the comments from the database
-	rows, err := dbc.DB.Query(context.Background(), "SELECT product_comments.id, username, product_comments.course_id, comment FROM product_comments JOIN users ON users.id = user_id WHERE course_id = $1", productID)
+	rows, err := dbc.DB.Query(context.Background(), "SELECT product_comments.id, username, product_comments.course_id, comment FROM product_comments JOIN users ON users.id = user_id WHERE course_id = $1 ORDER BY product_comments.id DESC", productID)
 	if err != nil {
 		return []Comment{}, err
 	}
@@ -33,7 +33,7 @@ func (dbc DBConnector) GetCommentsByProductID(productID int) ([]Comment, error) 
 	return comments, nil
 }
 
-// Add a comment to a product
+// AddComment adds a comment to a product
 func (dbc DBConnector) AddComment(userID int, productID int, comment string) error {
 	_, err := dbc.DB.Exec(context.Background(), "INSERT INTO product_comments (user_id, course_id, comment) VALUES ($1, $2, $3)", userID, productID, comment)
 	if err != nil {
