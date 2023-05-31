@@ -57,10 +57,10 @@ CREATE TABLE user_purchases (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE video_comments (
+CREATE TABLE product_comments (
     id SERIAL PRIMARY KEY,
-    user_id SERIAL NOT NULL,
-    video_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    course_id INTEGER NOT NULL,
     comment VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -105,14 +105,14 @@ REFERENCES products (id)
 ON DELETE CASCADE;
 
 /* Product deleted -> delete comments */
-ALTER TABLE video_comments
-ADD CONSTRAINT fk_video_comments
-FOREIGN KEY (video_id)
+ALTER TABLE product_comments
+ADD CONSTRAINT fk_product_comments
+FOREIGN KEY (course_id)
 REFERENCES video (id)
 ON DELETE CASCADE;
 
 /* User deleted -> delete comments */
-ALTER TABLE video_comments
+ALTER TABLE product_comments
 ADD CONSTRAINT fk_comment_author
 FOREIGN KEY (user_id)
 REFERENCES users (id)
@@ -211,14 +211,19 @@ VALUES (1, 1);
 INSERT INTO user_purchases (user_id, product_id)
 VALUES (1, 2);
 
-INSERT INTO video_comments (user_id, video_id, comment)
-VALUES (1, 1, 'This is a comment');
+/* Sample comments */
+INSERT INTO product_comments (user_id, course_id, comment)
+VALUES (1, 1, 'Das ist ein Kommentar');
 
-INSERT INTO video_comments (user_id, video_id, comment)
-VALUES (1, 2, 'This is a comment');
+INSERT INTO product_comments (user_id, course_id, comment)
+VALUES (1, 1, 'Das ist ein Kommentar');
 
-INSERT INTO video_comments (user_id, video_id, comment)
-VALUES (1, 3, 'This is a comment');
+INSERT INTO product_comments (user_id, course_id, comment)
+VALUES (2, 1, 'Das ist auch ein Kommentar');
+
+INSERT INTO product_comments (user_id, course_id, comment)
+VALUES (1, 1, 'das ist ja krass bro');
+
 
 /* --Indexes-- */
 CREATE INDEX idx_user_purchases_user_id ON user_purchases (user_id);

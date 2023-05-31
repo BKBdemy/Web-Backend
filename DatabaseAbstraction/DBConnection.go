@@ -45,6 +45,9 @@ type DBOrm interface {
 	GetVideosByProductIndexID(productID int) ([]Video, error)
 	GetVideoByIndexID(indexID int) (Video, error)
 	GetProductByVideoIndexID(indexID int) (Product, error)
+
+	GetProductComments(productID int) ([]Comment, error)
+	AddProductComment(productID int, userID int, comment string) error
 }
 
 const (

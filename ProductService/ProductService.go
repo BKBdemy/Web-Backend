@@ -38,6 +38,9 @@ func (p ProductService) RegisterHandlers(r *gin.Engine, middleware ...gin.Handle
 	r.GET("/api/products/:id", p.GetProductHandler)
 	r.POST("/api/products/:id/purchase", middleware[0], p.PurchaseProductHandler)
 	r.GET("/api/products/owned", middleware[0], p.GetOwnedProductsHandler)
+
+	r.GET("/api/products/:id/comments", p.GetProductComments)
+	r.POST("/api/products/:id/comments", middleware[0], p.PostProductComment)
 }
 
 type productResponse struct {
@@ -220,4 +223,90 @@ func (p ProductService) GetOwnedProductsHandler(c *gin.Context) {
 	}
 
 	c.JSON(200, productResponses)
+}
+
+type commentResponse struct {
+	Text      string
+	Username  string
+	ProductID int
+}
+
+// GetProductComments godoc
+// @Summary Get product comments
+// @Description Get comments for a product
+// @Tags Products
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Product ID"
+// @Success 200 {object} []commentResponse
+// @Failure 400 {object} purchaseProductResponse
+// @Router /api/products/{id}/comments [get]
+func (p ProductService) GetProductComments(c *gin.Context) {
+	productID := c.Param("id")
+	convertedProductID, err := strconv.Atoi(productID)
+	if err != nil {
+		c.JSON(400, purchaseProductResponse{Error: "invalid product id"})
+		return
+	}
+
+	comments, err := p.DB.GetProductComments(convertedProductID)
+	if err != nil {
+		c.JSON(400, purchaseProductResponse{Error: "Error getting comments: " + err.Error()})
+		return
+	}
+
+	// construct commentresponse
+	response := make([]commentResponse, len(comments))
+
+	for i, comment := range comments {
+		response[i] = commentResponse{
+			Text:      comment.Comment,
+			Username:  comment.Username,
+			ProductID: comment.ProductID,
+		}
+	}
+
+	c.JSON(200, comments)
+}
+
+type commentRequest struct {
+	Comment string
+}
+
+// PostProductComment godoc
+// @Summary Post product comment
+// @Description Post a comment for a product
+// @Tags Products
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Product ID"
+// @Param comment body commentRequest true "Comment"
+// @Success 200 {object} purchaseProductResponse
+// @Failure 400 {object} purchaseProductResponse
+// @Security ApiKeyAuth
+// @Router /api/products/{id}/comments [post]
+func (p ProductService) PostProductComment(c *gin.Context) {
+	productID := c.Param("id")
+	convertedProductID, err := strconv.Atoi(productID)
+	if err != nil {
+		c.JSON(400, purchaseProductResponse{Error: "invalid product id"})
+		return
+	}
+
+	user := c.MustGet("user").(DatabaseAbstraction.User)
+
+	var comment commentRequest
+	err = c.ShouldBindJSON(&comment)
+	if err != nil {
+		c.JSON(400, purchaseProductResponse{Error: "Error parsing comment: " + err.Error()})
+		return
+	}
+
+	err = p.DB.AddProductComment(convertedProductID, user.IndexID, comment.Comment)
+	if err != nil {
+		c.JSON(400, purchaseProductResponse{Error: "Error posting comment: " + err.Error()})
+		return
+	}
+
+	c.JSON(200, purchaseProductResponse{Message: "comment posted"})
 }
