@@ -6,6 +6,7 @@ import (
 	"EntitlementServer/ProductService"
 	"EntitlementServer/VideoService"
 	_ "EntitlementServer/docs"
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
@@ -29,6 +30,7 @@ type HTTPService interface {
 //
 // @BasePath					/
 func main() {
+
 	DB := DatabaseAbstraction.DBConnector{}
 	conn, err := DatabaseAbstraction.Connect()
 	if err != nil {
@@ -54,6 +56,8 @@ func main() {
 
 	// Register the Swagger documentation handler
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	pprof.Register(r)
 
 	err = r.Run(":8080")
 	if err != nil {
