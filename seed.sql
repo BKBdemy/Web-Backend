@@ -210,31 +210,31 @@ INSERT INTO products (name, description, price, image, preview_url, difficulty)
 VALUES ('Java für Anfänger', 'Java ist eine der beliebtesten Programmiersprachen der Welt. In diesem Kurs lernen Sie die Grundlagen von Java und werden in der Lage sein, Ihre eigenen Programme zu schreiben. Egal, ob Sie ein Anfänger sind oder bereits erste Erfahrungen haben, dieser Kurs bietet Ihnen das nötige Wissen, um Ihre eigenen Java-Programme zu erstellen.', 500, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 1.mp4', 2);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Einführung in Java-Konzepte', 'Starten Sie Ihre Reise in die aufregende Welt der Java-Programmierung. Erlernen Sie die grundlegenden Konzepte und Methoden, um Ihre eigenen Java-Anwendungen zu erstellen und Ihre Ideen zum Leben zu erwecken.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 2.mp4');
+VALUES ('Einführung in Java-Konzepte', 'Starten Sie Ihre Reise in die aufregende Welt der Java-Programmierung. Erlernen Sie die grundlegenden Konzepte und Methoden, um Ihre eigenen Java-Anwendungen zu erstellen und Ihre Ideen zum Leben zu erwecken.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 2.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Einrichten von Java & IntelliJ für optimale Entwicklung', 'Lernen Sie die Vorteile und Funktionen von IntelliJ kennen und nehmen Sie Ihre Java-Entwicklung auf eine neue Ebene. Entdecken Sie die Vielfalt an Werkzeugen, die Ihnen zur Verfügung stehen, um Ihre Java-Programme zu optimieren und zu perfektionieren.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 3.mp4');
+VALUES ('Einrichten von Java & IntelliJ für optimale Entwicklung', 'Lernen Sie die Vorteile und Funktionen von IntelliJ kennen und nehmen Sie Ihre Java-Entwicklung auf eine neue Ebene. Entdecken Sie die Vielfalt an Werkzeugen, die Ihnen zur Verfügung stehen, um Ihre Java-Programme zu optimieren und zu perfektionieren.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 3.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Erstes Java-Programm: Hallo Welt', 'Erstellen Sie Ihr erstes Java-Programm! Beginnen Sie Ihre Coding-Reise mit dem klassischen "Hallo Welt"-Programm und erleben Sie den Stolz der Code-Erstellung.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 4.mp4');
+VALUES ('Erstes Java-Programm: Hallo Welt', 'Erstellen Sie Ihr erstes Java-Programm! Beginnen Sie Ihre Coding-Reise mit dem klassischen "Hallo Welt"-Programm und erleben Sie den Stolz der Code-Erstellung.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 4.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Macht der Variablen in Java', 'Erfahren Sie, wie Sie Variablen in Java effizient einsetzen, um Ihre Programme vielseitiger und dynamischer zu gestalten.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 5.mp4');
+VALUES ('Macht der Variablen in Java', 'Erfahren Sie, wie Sie Variablen in Java effizient einsetzen, um Ihre Programme vielseitiger und dynamischer zu gestalten.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 5.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Java-Verzweigungen: Der Weg zur Entscheidungsfindung', 'Tauchen Sie ein in die Logik und die Kraft der Verzweigungen in Java. Lernen Sie, wie Sie diese verwenden, um die Entscheidungsfindung in Ihren Programmen zu steuern.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 6.mp4');
+VALUES ('Java-Verzweigungen: Der Weg zur Entscheidungsfindung', 'Tauchen Sie ein in die Logik und die Kraft der Verzweigungen in Java. Lernen Sie, wie Sie diese verwenden, um die Entscheidungsfindung in Ihren Programmen zu steuern.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 6.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Funktionen in Java: Werkzeuge zur Code-Wiederverwendung', 'Erfahren Sie, wie Sie Funktionen in Java erstellen und nutzen, um Ihre Code-Effizienz zu steigern und die Wiederverwendbarkeit zu verbessern.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 7.mp4');
+VALUES ('Funktionen in Java: Werkzeuge zur Code-Wiederverwendung', 'Erfahren Sie, wie Sie Funktionen in Java erstellen und nutzen, um Ihre Code-Effizienz zu steigern und die Wiederverwendbarkeit zu verbessern.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 7.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Java in Aktion: Währungsrechner Projekt', 'Wenden Sie Ihre bisherigen Kenntnisse an und lernen Sie, wie Sie ein funktionaler Währungsrechner mit Java erstellen können. Dieses Projekt wird Ihnen dabei helfen, die erlernten Konzepte zu festigen und praktische Erfahrungen zu sammeln.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 8.mp4');
+VALUES ('Java in Aktion: Währungsrechner Projekt', 'Wenden Sie Ihre bisherigen Kenntnisse an und lernen Sie, wie Sie ein funktionaler Währungsrechner mit Java erstellen können. Dieses Projekt wird Ihnen dabei helfen, die erlernten Konzepte zu festigen und praktische Erfahrungen zu sammeln.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 8.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Spielerisches Lernen: Zahlenraten-Spiel in Java', 'Lassen Sie uns spielerisch lernen! Erstellen Sie ein unterhaltsames Zahlenraten-Spiel in Java und üben Sie dabei Ihre Programmierkenntnisse.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 9.mp4');
+VALUES ('Spielerisches Lernen: Zahlenraten-Spiel in Java', 'Lassen Sie uns spielerisch lernen! Erstellen Sie ein unterhaltsames Zahlenraten-Spiel in Java und üben Sie dabei Ihre Programmierkenntnisse.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 9.mp4');
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
-VALUES ('Erstellen Sie ansprechende Benutzeroberflächen: GUIs in Java', 'Lernen Sie, wie Sie mit Java ansprechende und intuitive Benutzeroberflächen erstellen können. Erfahren Sie, wie GUIs die Benutzererfahrung Ihrer Programme verbessern können.', 200, 10, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 10.mp4');
+VALUES ('Erstellen Sie ansprechende Benutzeroberflächen: GUIs in Java', 'Lernen Sie, wie Sie mit Java ansprechende und intuitive Benutzeroberflächen erstellen können. Erfahren Sie, wie GUIs die Benutzererfahrung Ihrer Programme verbessern können.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 10.mp4');
 
 
 
