@@ -237,6 +237,52 @@ INSERT INTO video (name, description, points, parent_product_id, thumbnail, file
 VALUES ('Erstellen Sie ansprechende Benutzeroberflächen: GUIs in Java', 'Lernen Sie, wie Sie mit Java ansprechende und intuitive Benutzeroberflächen erstellen können. Erfahren Sie, wie GUIs die Benutzererfahrung Ihrer Programme verbessern können.', 200, 4, '/static/java/thumbnail.jpg', '/static/java/Abschnitt 10.mp4');
 
 
+/* C++ */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('Objekt-Orientiertes C++', 'C++ ist eine der beliebtesten Programmiersprachen der Welt. In diesem Kurs lernen Sie die Grundlagen von C++ und werden in der Lage sein, Ihre eigenen Programme zu schreiben. Egal, ob Sie ein Anfänger sind oder bereits erste Erfahrungen haben, dieser Kurs bietet Ihnen das nötige Wissen, um Ihre eigenen C++-Programme zu erstellen.', 500, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 1.mp4', 3);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Klassen und Objekte in C++', 'Lernen Sie, wie Sie Klassen und Objekte in C++ erstellen und verwenden. Entdecken Sie die Vorteile der Objektorientierung und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 1.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('UML-Diagramme in C++', 'Erfahren Sie, wie Sie UML-Diagramme verwenden, um Ihre C++-Programme zu planen und zu entwerfen. Lernen Sie, wie Sie Klassen, Attribute und Methoden in UML-Diagrammen darstellen.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 2.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('UML-Diagramme in C++ #2', 'Erfahren Sie, wie Sie UML-Diagramme verwenden, um Ihre C++-Programme zu planen und zu entwerfen. Lernen Sie, wie Sie Klassen, Attribute und Methoden in UML-Diagrammen darstellen.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 3.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Erste Schritte in C++', 'Lernen Sie die Grundlagen von C++ kennen und erstellen Sie Ihr erstes Programm. Entdecken Sie die Syntax von C++ und lernen Sie, wie Sie Variablen, Datentypen und Operatoren verwenden.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 4.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('for-Schleifen in C++', 'Erfahren Sie, wie Sie for-Schleifen in C++ verwenden, um Ihre Programme effizienter zu gestalten. Lernen Sie, wie Sie for-Schleifen verwenden, um Code zu wiederholen und Ihre Programme zu optimieren.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 5.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Container-Klasse std::array in C++', 'Lernen Sie, wie Sie Container-Klassen in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Container-Klassen und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 6.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Container-Klasse std::vector in C++', 'Lernen Sie, wie Sie Container-Klassen in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Container-Klassen und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 7.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Iteratoren und deren Verwendung in <algorithm> in C++', 'Lernen Sie, wie Sie Iteratoren in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Iteratoren und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 8.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Klassendiagramm', 'Lernen Sie, wie Sie UML-Diagramme verwenden, um Ihre C++-Programme zu planen und zu entwerfen. Lernen Sie, wie Sie Klassen, Attribute und Methoden in UML-Diagrammen darstellen.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 9.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Enumerationen', 'Lernen Sie, wie Sie Enumerationen in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Enumerationen und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 10.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Klassenimplementierung', 'Implementieren Sie die Klassen für das Tic-Tac-Toe-Beispielprojekt. Lernen Sie, wie Sie Klassen in C++ implementieren.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 11.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Klasseninstanziierung', 'Instanziieren Sie die Klassen für das Tic-Tac-Toe-Beispielprojekt. Lernen Sie, wie Sie Klassen in C++ instanziieren.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 12.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Aggregation & Komposition', 'Lernen Sie, wie Sie Aggregation und Komposition in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Aggregation und Komposition und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 13.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Beispielprojekt Tic-Tac-Toe: Konstruktor & Destruktor', 'Lernen Sie, wie Sie Konstruktoren und Destruktoren in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Konstruktoren und Destruktoren und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 14.mp4');
+
 
 INSERT INTO user_purchases (user_id, product_id)
 VALUES (1, 1);
