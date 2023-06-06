@@ -345,6 +345,45 @@ INSERT INTO video (name, description, points, parent_product_id, thumbnail, file
 VALUES ('Insufficient Monitoring Logging', 'In dieser letzten Lektion lernen Sie, wie man unzureichendes Monitoring und Logging in APIs vermeidet.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 10.mp4');
 
 
+/* JS */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('Javascript Tutorial für Anfänger', 'Ein Anfängerfreundliches Javascript Tutorial, das von den Grundlagen bis zu fortgeschrittenen Konzepten reicht.', 300, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_1_Einfuehrung_und_erstes_Programm.mp4', 1);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Einführung und erstes Programm', 'Der erste Teil des Javascript-Tutorials führt in die Grundlagen von Javascript ein und hilft Ihnen, Ihr erstes Programm zu schreiben.', 100, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_1_Einfuehrung_und_erstes_Programm.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Variablen', 'Der zweite Teil des Javascript-Tutorials führt in das Konzept der Variablen ein.', 100, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_2_Variablen.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Operatoren', 'Der dritte Teil des Javascript-Tutorials führt in das Konzept der Operatoren ein.', 100, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_3_Operatoren.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Bedingte Anweisungen und das DOM', 'Der vierte Teil des Javascript-Tutorials führt in das Konzept der bedingten Anweisungen und des Document Object Model (DOM) ein.', 100, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_4_Bedingte_Aweisungen_und_das_DOM.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Arrays und Schleifen', 'Der fünfte Teil des Javascript-Tutorials führt in das Konzept von Arrays und Schleifen ein.', 100, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Abschnitt_5_Arrays_und_Schleifen.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Übungsvideo zu Operatoren', 'Dieses Übungsvideo bietet zusätzliche Übungen zu den in Abschnitt 3 behandelten Konzepten.', 50, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Uebungsvideo_zu_Abschnitt_3_Operatoren.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Übungsvideo zu Bedingten Anweisungen und Arrays', 'Dieses Übungsvideo bietet zusätzliche Übungen zu den in Abschnitt 4 und 5 behandelten Konzepten.', 50, 7, '/static/js_tutorial/thumbnail.jpg', '/static/js_tutorial/Uebungsvideo_zu_Abschnitten_4_und_5.mp4');
+
+/* C# */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('C# im Detail', 'Ein detailliertes C#-Tutorial, das die Grundlagen bis hin zu fortgeschrittenen Konzepten abdeckt.', 400, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_1_Installation_und_erstes_Programm.mp4', 2);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Installation und erstes Programm', 'Der erste Abschnitt des C#-Tutorials, der in die Installation und das Schreiben des ersten Programms einführt.', 100, 8, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_1_Installation_und_erstes_Programm.mp4'),
+       ('Variablen und Datentypen', 'Der zweite Abschnitt des C#-Tutorials, der das Konzept von Variablen und Datentypen einführt.', 100, 8, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_2_Variablen_und_Datentypen.mp4'),
+       ('Mathematische Operatoren', 'Der dritte Abschnitt des C#-Tutorials, der das Konzept von mathematischen Operatoren einführt.', 100, 8, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_3_Mathematische_Operatoren.mp4'),
+       ('If Abfragen', 'Der vierte Abschnitt des C#-Tutorials, der das Konzept von if-Abfragen einführt.', 100, 8, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_4_If_Abfragen.mp4'),
+       ('Switch Blöcke', 'Der fünfte Abschnitt des C#-Tutorials, der das Konzept von switch Blöcken einführt.', 100, 8, '/static/csharp_tutorial/thumbnail.jpg', '/static/csharp_tutorial/Abschnitt_5_Switch_Bloecke.mp4');
+
+-- Add similar entries for the rest of the videos in the series...
+
+
 INSERT INTO user_purchases (user_id, product_id)
 VALUES (1, 1);
 INSERT INTO user_purchases (user_id, product_id)
