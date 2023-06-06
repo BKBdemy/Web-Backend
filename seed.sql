@@ -184,7 +184,7 @@ VALUES ('Die for-Schleife', 'Das letzte Kapitel führt Sie in die Verwendung von
 
 /* HTML & CSS */
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
-VALUES ('Erstelle deine eigene Webseite', 'Tauche ein in die faszinierende Welt der Webentwicklung und erschaffe deine eigene atemberaubende Webseite. Lerne die Grundlagen von HTML und CSS, um deine kreativen Ideen zum Leben zu erwecken. Egal, ob du Anfänger bist oder bereits erste Erfahrungen hast, dieser Kurs bietet dir das nötige Wissen, um eine beeindruckende Homepage zu erstellen.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 2);
+VALUES ('Erstelle deine eigene Webseite', 'Tauche ein in die faszinierende Welt der Webentwicklung und erschaffe deine eigene atemberaubende Webseite. Lerne die Grundlagen von HTML und CSS, um deine kreativen Ideen zum Leben zu erwecken. Egal, ob du Anfänger bist oder bereits erste Erfahrungen hast, dieser Kurs bietet dir das nötige Wissen, um eine beeindruckende Homepage zu erstellen.', 500, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 1.mp4', 1);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Einführung in die aufregende Welt von HTML', 'Tauchen Sie ein in die spannende Welt von HTML und entdecken Sie die Grundlagen, um eine beeindruckende Webseite zu erstellen. Lernen Sie, wie Sie eine HTML-Datei von Grund auf erstellen und die mächtigen HTML-Tags nutzen, um Ihre Vision zum Leben zu erwecken.', 200, 3, '/static/htmlcss/thumbnail.jpg', '/static/htmlcss/Abschnitt 2.mp4');
@@ -239,7 +239,7 @@ VALUES ('Erstellen Sie ansprechende Benutzeroberflächen: GUIs in Java', 'Lernen
 
 /* C++ */
 INSERT INTO products (name, description, price, image, preview_url, difficulty)
-VALUES ('Objekt-Orientiertes C++', 'C++ ist eine der beliebtesten Programmiersprachen der Welt. In diesem Kurs lernen Sie die Grundlagen von C++ und werden in der Lage sein, Ihre eigenen Programme zu schreiben. Egal, ob Sie ein Anfänger sind oder bereits erste Erfahrungen haben, dieser Kurs bietet Ihnen das nötige Wissen, um Ihre eigenen C++-Programme zu erstellen.', 500, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 1.mp4', 3);
+VALUES ('Objekt-Orientiertes C++', 'C++ ist eine der beliebtesten Programmiersprachen der Welt. In diesem Kurs lernen Sie die Grundlagen von C++ und werden in der Lage sein, Ihre eigenen Programme zu schreiben. Egal, ob Sie ein Anfänger sind oder bereits erste Erfahrungen haben, dieser Kurs bietet Ihnen das nötige Wissen, um Ihre eigenen C++-Programme zu erstellen.', 500, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 1.mp4', 1);
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Klassen und Objekte in C++', 'Lernen Sie, wie Sie Klassen und Objekte in C++ erstellen und verwenden. Entdecken Sie die Vorteile der Objektorientierung und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 1.mp4');
@@ -282,6 +282,67 @@ VALUES ('Beispielprojekt Tic-Tac-Toe: Aggregation & Komposition', 'Lernen Sie, w
 
 INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
 VALUES ('Beispielprojekt Tic-Tac-Toe: Konstruktor & Destruktor', 'Lernen Sie, wie Sie Konstruktoren und Destruktoren in C++ verwenden, um Ihre Programme effizienter zu gestalten. Entdecken Sie die Vorteile von Konstruktoren und Destruktoren und wie Sie diese nutzen können, um Ihre Programme zu verbessern.', 200, 5, '/static/cpp/thumbnail.jpg', '/static/cpp/Abschnitt 14.mp4');
+
+/* One-Page Website */
+/* SQL */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('One-Page Website mit HTML & CSS', 'Lernen Sie, wie Sie eine One-Page Website mit HTML & CSS erstellen. In diesem Kurs werden Sie die Grundlagen von HTML & CSS kennen lernen und Ihre eigene Website erstellen. Egal, ob Sie ein Anfänger sind oder bereits erste Erfahrungen haben, dieser Kurs bietet Ihnen das nötige Wissen, um Ihre eigene Website zu erstellen.', 500, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Einführung & Struktur.mp4', 3);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Einführung & Struktur', 'In dieser Lektion lernen Sie die Struktur einer One-Page Website kennen und welche Schritte Sie für deren Erstellung benötigen.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Einführung & Struktur.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Grundgerüst in HTML', 'In dieser Lektion lernen Sie, wie Sie das Grundgerüst für Ihre Website in HTML erstellen.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Grundgerüst in HTML.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Vorbereitungen treffen', 'In dieser Lektion bereiten wir alles vor, um mit dem Styling der Website beginnen zu können.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Vorbereitungen treffen.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Das Stylen beginnt', 'In dieser Lektion beginnen wir mit dem Styling der Website. Wir lernen, wie man CSS effektiv einsetzt, um die Website ansprechend zu gestalten.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Das Stylen beginnt.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Header & Navigation', 'In dieser Lektion gestalten wir den Header und die Navigation unserer Website. Diese Elemente sind wichtig für die Benutzerführung und das Gesamtbild der Website.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Header & Navigation.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Home & About', 'In dieser Lektion gestalten wir die Home- und About-Bereiche unserer Website. Wir lernen, wie man Inhalte ansprechend darstellt und den Benutzer auf der Website hält.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Home & About.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Work & Contact', 'In dieser Lektion gestalten wir den Work- und Contact-Bereich unserer Website. Wir lernen, wie man sein Portfolio präsentiert und den Benutzer dazu ermutigt, Kontakt aufzunehmen.', 200, 6, '/static/advancedhtml/thumbnail.jpg', '/static/advancedhtml/Work & Contact.mp4');
+
+
+/* API Security */
+INSERT INTO products (name, description, price, image, preview_url, difficulty)
+VALUES ('API Sicherheit', 'Lernen Sie, wie Sie APIs sicher gestalten und mögliche Sicherheitslücken vermeiden. Dieser Kurs behandelt verschiedene Aspekte der API-Sicherheit, einschließlich Bearer Tokens, OAuth 2.0, XSS-Injection, SQL-Injection und mehr.', 500, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 1.mp4', 3);
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Was ist ein Bearer Token?', 'In dieser Lektion lernen Sie, was ein Bearer Token ist und wie es in der API-Sicherheit verwendet wird.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 1.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('OAuth 2.0 im Detail', 'Diese Lektion bietet eine detaillierte Erläuterung von OAuth 2.0 anhand eines Beispiels.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 2.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('APIs hacken, wie geht das?', 'In dieser Lektion lernen Sie, wie man APIs hackt und wie man die Sicherheit von APIs beurteilt.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 3.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('API Sicherheit - Excessive Data Exposure verhindern', 'Lernen Sie, wie Sie übermäßige Datenexposition in APIs verhindern.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 4.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Cross Site Scripting (XSS) Injection', 'Diese Lektion behandelt XSS-Injections und wie man sie in APIs verhindert.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 5.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Mass Assignment Autobinding Vulnerability', 'Erfahren Sie mehr über Mass Assignment und Autobinding-Schwachstellen in APIs und wie man sie vermeidet.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 6.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Broken Function Level Authorization', 'In dieser Lektion lernen Sie, was Broken Function Level Authorization ist und wie man es in APIs vermeidet.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 7.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('SQL Injection', 'Lernen Sie, was eine SQL-Injection ist und wie man sie in APIs vermeidet.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 8.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Rate Limiting Brute Force Angriffe', 'In dieser Lektion lernen Sie, was Rate Limiting und Brute-Force-Angriffe sind und wie man sie verhindert.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 9.mp4');
+
+INSERT INTO video (name, description, points, parent_product_id, thumbnail, filename)
+VALUES ('Insufficient Monitoring Logging', 'In dieser letzten Lektion lernen Sie, wie man unzureichendes Monitoring und Logging in APIs vermeidet.', 200, 6, '/static/apisecurity/thumbnail.jpg', '/static/apisecurity/Abschnitt 10.mp4');
 
 
 INSERT INTO user_purchases (user_id, product_id)
